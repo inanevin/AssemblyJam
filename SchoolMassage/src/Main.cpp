@@ -1,32 +1,35 @@
 #include <iostream>
 #include "Common/Utils.hpp"
+#include "Common/Common.hpp"
 #include "Graphics/Window.hpp"
-#include "Graphics/Backend.hpp"
+#include "Graphics/GameRenderer.hpp"
 
 int main(int argc, char** argv)
 {
-	using namespace SM;
+    using namespace SM;
 
-	Window w;
+    Window w;
 
-	if (!w.Initialize()) {
-		LOG("Window init failure :(");
+    if (!w.Initialize())
+    {
+        LOG("Window init failure :(");
 
-		return 1;
-	}
+        return 1;
+    }
 
+    auto v = ReadFile("Resources/map.txt");
+    LOG("DEBUG map text file size: %u", v.size());
 
-	auto v = ReadFile("Resources/map.txt");
-	LOG("DEBUG map text file size: %u", v.size());
+    GameRenderer renderer;
+    renderer.Initialize();
 
-	Backend::Initialize();
+    while (true)
+    {
+        w.Update();
+        renderer.Render();
+    }
 
-	while (true)
-	{
-		w.Update();
-	}
+    renderer.Terminate();
 
-	Backend::Terminate();
-
-	return 0;
+    return 0;
 }

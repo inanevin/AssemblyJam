@@ -17,8 +17,8 @@ src/stb/stb_image.h
 # Graphics
 src/Graphics/Window.hpp
 src/Graphics/Window.cpp
-src/Graphics/Backend.hpp
-src/Graphics/Backend.cpp
+src/Graphics/GameRenderer.hpp
+src/Graphics/GameRenderer.cpp
 
 # Common
 src/Common/DataStructures.hpp
@@ -27,6 +27,16 @@ src/Common/Utils.cpp
 src/Common/Common.hpp
 src/Common/Common.cpp
 
+# linavg
+src/linavg/Backends/GL/GLBackend.cpp
+src/linavg/Core/Backend.cpp
+src/linavg/Core/Common.cpp
+src/linavg/Core/Drawer.cpp
+src/linavg/Core/Math.cpp
+src/linavg/Core/Renderer.cpp
+src/linavg/Core/Text.cpp
+src/linavg/Utility/Utility.cpp
+
 )
 
 #--------------------------------------------------------------------
@@ -34,7 +44,7 @@ src/Common/Common.cpp
 #--------------------------------------------------------------------
 add_executable(${PROJECT_NAME} ${SCHOOLMASSAGE_SOURCES} )
 add_executable(Lina::SchoolMassage ALIAS ${PROJECT_NAME}) 
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 #--------------------------------------------------------------------
 # Set include directories
@@ -43,11 +53,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glad/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glm/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/linavg/include)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glm/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/linavg/include)
 
 #--------------------------------------------------------------------
 # Links
