@@ -23,6 +23,7 @@ src/Common/DataStructures.hpp
 #--------------------------------------------------------------------
 add_executable(${PROJECT_NAME} ${SCHOOLMASSAGE_SOURCES} )
 add_executable(Lina::SchoolMassage ALIAS ${PROJECT_NAME}) 
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 
 #--------------------------------------------------------------------
 # Set include directories
