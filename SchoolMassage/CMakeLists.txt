@@ -33,15 +33,22 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/gla
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glm/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/include)
 
+include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glm/include)
+
 #--------------------------------------------------------------------
 # Links
 #--------------------------------------------------------------------
-
 if(WIN32)
  target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/lib/glfw3.lib)
 else()
- target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/lib/libglfw3.a)
- endif()
+ find_package(OpenGL REQUIRED)
+ target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/lib/libglfw3.a OpenGL::GL 
+  "-framework Cocoa"
+  "-framework IOKit")
+endif()
 
 
 #--------------------------------------------------------------------

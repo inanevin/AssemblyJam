@@ -16,6 +16,11 @@ namespace SM
         // glfwWindowHint(GLFW_DECORATED, appInfo.windowProperties.decorated);
         // glfwWindowHint(GLFW_RESIZABLE, appInfo.windowProperties.resizable);
 
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
         auto*              primaryMonitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode           = glfwGetVideoMode(primaryMonitor);
 
@@ -83,6 +88,12 @@ namespace SM
 
         glfwDestroyWindow(m_glfwWindow);
         glfwTerminate();
+    }
+
+    void Window::Update()
+    {
+        glfwSwapBuffers(m_glfwWindow);
+        glfwPollEvents();
     }
 
     void Window::SetSize(const Vector2i& size)

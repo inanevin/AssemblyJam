@@ -21,6 +21,7 @@ namespace SM
         bool Initialize(int x, int y);
         void Shutdown();
         void Close();
+        void Update();
 
         GLFWwindow* GetGLFWWindow()
         {
