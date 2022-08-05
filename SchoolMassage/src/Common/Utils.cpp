@@ -1,6 +1,5 @@
 #include "Common/Utils.hpp"
 #include <fstream> // readfile shit
-#include <mach-o/dyld.h> // _NSGetExecutablePath
 #include <stdio.h> // vprintf, printf
 #include <stdarg.h> // varargs
 
