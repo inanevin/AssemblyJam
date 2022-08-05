@@ -64,6 +64,9 @@ include/Core/Backend.hpp
 include/Core/Common.hpp
 include/Core/Math.hpp
 include/Backends/GL/GLBackend.hpp
+glad/include/glad//glad.h
+glad/include/KHR/khrplatform.h
+
 )
 
 
@@ -78,6 +81,7 @@ src/Core/Drawer.cpp
 src/Core/Common.cpp
 src/Core/Math.cpp
 src/Backends/GL/GLBackend.cpp
+glad/include/glad.c
 )
 
 #--------------------------------------------------------------------
@@ -91,6 +95,7 @@ add_library(Lina::VG ALIAS ${PROJECT_NAME})
 #--------------------------------------------------------------------
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/glad/include)
 target_compile_definitions(${PROJECT_NAME} PUBLIC LINAVG_VERSION_MAJOR=1)
 target_compile_definitions(${PROJECT_NAME} PUBLIC LINAVG_VERSION_MINOR=0)
 target_compile_definitions(${PROJECT_NAME} PUBLIC LINAVG_VERSION_PATCH=1)
@@ -99,10 +104,6 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC LINAVG_VERSION_PATCH=1)
 # Subdirectories & linking
 #--------------------------------------------------------------------
 
-if(LINAVG_BACKEND_GL)
-	include(_Dependencies/glad/link.cmake)
-	link_glad()
-endif()
 
 include(_Dependencies/freetype/link.cmake)
 link_freetype()
