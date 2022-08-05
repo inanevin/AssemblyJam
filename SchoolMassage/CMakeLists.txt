@@ -15,6 +15,8 @@ src/stb/stb_image.h
 src/Graphics/Window.hpp
 src/Graphics/Window.cpp
 src/Common/DataStructures.hpp
+src/Common/Utils.hpp
+src/Common/Utils.cpp
 
 )
 

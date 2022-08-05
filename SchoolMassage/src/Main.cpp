@@ -1,14 +1,13 @@
 #include <iostream>
+#include "Common/Utils.hpp"
 #include "Graphics/Window.hpp"
 
 int main(int argc, char** argv)
 {
 	SM::Window w;
 	if (!w.Initialize(500, 500)) {
-		std::cout << "WINDOW INIT FAILLLL";
+		SM::LOG("Window init failure :(");
 		return 1;
-	} else {
-		std::cout << "WINDOW INIT OK!!";
 	}
 
 	while (true)
