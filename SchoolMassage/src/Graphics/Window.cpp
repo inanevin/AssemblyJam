@@ -1,4 +1,5 @@
 #include "Graphics/Window.hpp"
+#include "Common/Common.hpp"
 #include <GLFW/glfw3.h>
 
 namespace SM
@@ -9,8 +10,11 @@ namespace SM
     {
     }
 
-    bool Window::Initialize(int w, int h)
+    bool Window::Initialize()
     {
+        const int w = g_config.windowWidth;
+        const int h = g_config.windowHeight;
+
         glfwInit();
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         // glfwWindowHint(GLFW_DECORATED, appInfo.windowProperties.decorated);
@@ -25,7 +29,7 @@ namespace SM
         const GLFWvidmode* mode           = glfwGetVideoMode(primaryMonitor);
 
         const bool fullScreen = false;
-        m_glfwWindow          = (glfwCreateWindow(w, h, "School Massage", fullScreen ? primaryMonitor : NULL, NULL));
+        m_glfwWindow          = (glfwCreateWindow(w, h, g_config.windowTitle, fullScreen ? primaryMonitor : NULL, NULL));
         // glfwGetMonitorContentScale(primaryMonitor, &(appInfo.windowProperties.contentScaleWidth), &(appInfo.windowProperties.contentScaleHeight));
 
         if (!m_glfwWindow)
@@ -40,6 +44,9 @@ namespace SM
         glfwSetErrorCallback(GLFWErrorCallback);
 
         glfwSetWindowUserPointer(m_glfwWindow, this);
+
+        float yScale = 0.0f;
+        glfwGetMonitorContentScale(primaryMonitor, &g_config.framebufferScale, &yScale);
 
         auto windowResizeFunc = [](GLFWwindow* w, int wi, int he) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));

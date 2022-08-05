@@ -18,7 +18,7 @@ namespace SM
         Window() = default;
         ~Window() = default;
 
-        bool Initialize(int x, int y);
+        bool Initialize();
         void Shutdown();
         void Close();
         void Update();

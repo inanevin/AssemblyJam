@@ -9,14 +9,23 @@ project(SchoolMassage)
 
 set(SCHOOLMASSAGE_SOURCES 
 
+# Core
 src/Main.cpp
 src/glad/glad.c
 src/stb/stb_image.h
+
+# Graphics
 src/Graphics/Window.hpp
 src/Graphics/Window.cpp
+src/Graphics/Backend.hpp
+src/Graphics/Backend.cpp
+
+# Common
 src/Common/DataStructures.hpp
 src/Common/Utils.hpp
 src/Common/Utils.cpp
+src/Common/Common.hpp
+src/Common/Common.cpp
 
 )
 
@@ -34,11 +43,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glad/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glm/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/fmt/include)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glm/include)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/fmt/include)
 
 #--------------------------------------------------------------------
 # Links

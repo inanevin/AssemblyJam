@@ -7,8 +7,9 @@ int main(int argc, char** argv)
 	using namespace SM;
 
 	Window w;
-	if (!w.Initialize(500, 500)) {
+	if (!w.Initialize()) {
 		LOG("Window init failure :(");
+
 		return 1;
 	}
 
