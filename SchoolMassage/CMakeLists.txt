@@ -12,6 +12,9 @@ set(SCHOOLMASSAGE_SOURCES
 src/Main.cpp
 src/glad/glad.c
 src/stb/stb_image.h
+src/Graphics/Window.hpp
+src/Graphics/Window.cpp
+src/Common/DataStructures.hpp
 
 )
 
@@ -24,7 +27,7 @@ add_executable(Lina::SchoolMassage ALIAS ${PROJECT_NAME})
 #--------------------------------------------------------------------
 # Set include directories
 #--------------------------------------------------------------------
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glad/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/include)
 
