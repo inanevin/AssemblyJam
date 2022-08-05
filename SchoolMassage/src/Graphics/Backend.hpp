@@ -40,7 +40,7 @@ Timestamp: 3/24/2022 11:33:52 PM
 #ifndef Backend_HPP
 #define Backend_HPP
 
-namespace SM
+namespace SM::Backend
 {
 
     class ShaderData
@@ -72,7 +72,6 @@ namespace SM
 
     extern BackendData g_backendData;
 
-    // Public API, if you want to implement your own backend, it needs to define these exact signatures.
     bool Initialize();
     void Terminate();
     void StartFrame();

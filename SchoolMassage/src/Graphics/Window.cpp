@@ -1,5 +1,8 @@
 #include "Graphics/Window.hpp"
 #include "Common/Common.hpp"
+#include "Common/Utils.hpp"
+
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 
 namespace SM
@@ -8,6 +11,7 @@ namespace SM
 
     static void GLFWErrorCallback(int error, const char* desc)
     {
+        LOG("GLFW Error: %s", desc);
     }
 
     bool Window::Initialize()
@@ -16,21 +20,22 @@ namespace SM
         const int h = g_config.windowHeight;
 
         glfwInit();
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        // glfwWindowHint(GLFW_DECORATED, appInfo.windowProperties.decorated);
-        // glfwWindowHint(GLFW_RESIZABLE, appInfo.windowProperties.resizable);
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_SAMPLES, g_config.msaaSamples);
+        glfwWindowHint(GLFW_DECORATED, g_config.decoratedWindow);
+        glfwWindowHint(GLFW_RESIZABLE, g_config.resizableWindow);
 
         auto*              primaryMonitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode           = glfwGetVideoMode(primaryMonitor);
 
         const bool fullScreen = false;
         m_glfwWindow          = (glfwCreateWindow(w, h, g_config.windowTitle, fullScreen ? primaryMonitor : NULL, NULL));
-        // glfwGetMonitorContentScale(primaryMonitor, &(appInfo.windowProperties.contentScaleWidth), &(appInfo.windowProperties.contentScaleHeight));
+        float yScale          = 0.0f;
+        glfwGetMonitorContentScale(primaryMonitor, &g_config.framebufferScale, &yScale);
 
         if (!m_glfwWindow)
         {
@@ -38,15 +43,28 @@ namespace SM
             return false;
         }
 
-        m_userPtr = static_cast<void*>(m_glfwWindow);
-
         // Set error callback
         glfwSetErrorCallback(GLFWErrorCallback);
 
-        glfwSetWindowUserPointer(m_glfwWindow, this);
+        // Set context.
+        glfwMakeContextCurrent(m_glfwWindow);
 
-        float yScale = 0.0f;
-        glfwGetMonitorContentScale(primaryMonitor, &g_config.framebufferScale, &yScale);
+        // Load glad
+        bool loaded = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        if (!loaded)
+        {
+            std::cerr << "LinaVG: GLAD Loader failed!" << std::endl;
+            return false;
+        }
+
+        // Update OpenGL about the window data.
+        glViewport(0, 0, w, h);
+
+        glfwSwapInterval(0);
+
+        // set user pointer for callbacks.
+        glfwSetWindowUserPointer(m_glfwWindow, this);
+        m_userPtr = static_cast<void*>(m_glfwWindow);
 
         auto windowResizeFunc = [](GLFWwindow* w, int wi, int he) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));

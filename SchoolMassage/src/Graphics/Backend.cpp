@@ -34,7 +34,7 @@ SOFTWARE.
 #include <iostream>
 #include <stdio.h>
 
-namespace SM
+namespace SM::Backend
 {
     BackendData g_backendData;
 

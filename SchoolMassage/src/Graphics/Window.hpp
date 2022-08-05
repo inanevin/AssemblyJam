@@ -13,9 +13,7 @@ namespace SM
     class Window
     {
     public:
-
-
-        Window() = default;
+        Window()  = default;
         ~Window() = default;
 
         bool Initialize();
@@ -47,14 +45,12 @@ namespace SM
         }
 
     private:
-
-
         Vector2i       m_size = Vector2i(0, 0);
-        Vector2i       m_pos = Vector2i(0, 0);
+        Vector2i       m_pos  = Vector2i(0, 0);
         static Window* s_instance;
-        GLFWwindow* m_glfwWindow = nullptr;
-        void* m_userPtr = nullptr;
-    }; 
-}
+        GLFWwindow*    m_glfwWindow = nullptr;
+        void*          m_userPtr    = nullptr;
+    };
+} // namespace SM
 
 #endif
