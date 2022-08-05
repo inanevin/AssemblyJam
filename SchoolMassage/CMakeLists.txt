@@ -53,8 +53,6 @@ else()
 endif()
 
 
-if(WIN32)
-
 # Copy engine resources to project solution directory to run within IDE.
 add_custom_command(
 TARGET ${PROJECT_NAME}
@@ -67,9 +65,6 @@ TARGET ${PROJECT_NAME}
 POST_BUILD
 COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/_Resources" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/")
 
-else()
-
-endif()
 #--------------------------------------------------------------------
 # Folder structuring in visual studio
 #--------------------------------------------------------------------

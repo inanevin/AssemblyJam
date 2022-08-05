@@ -4,11 +4,16 @@
 
 int main(int argc, char** argv)
 {
-	SM::Window w;
+	using namespace SM;
+
+	Window w;
 	if (!w.Initialize(500, 500)) {
 		SM::LOG("Window init failure :(");
 		return 1;
 	}
+
+	auto v = ReadFile("Resources/map.txt");
+	LOG("DEBUG map text file size: %u", v.size());
 
 	while (true)
 	{
