@@ -31,25 +31,14 @@ SOFTWARE.
 #ifndef DataStructures_HPP
 #define DataStructures_HPP
 
+#include <glm/glm.hpp>
+
 namespace SM
 {
-	struct Vector2
-	{
-		float x = 0.0f;
-		float y = 0.0f;
-	};
-
-	struct Vector2i
-	{
-		Vector2i(int w, int h) : x(w), y(h){};
-		int x = 0;
-		int y = 0;
-	};
-
-	struct Vector3
-	{
-
-	};
-}
+    typedef glm::ivec2 Vector2i;
+    typedef glm::vec2  Vector2;
+    typedef glm::vec3  Vector3;
+    typedef glm::vec4  Vector4;
+} // namespace SM
 
 #endif

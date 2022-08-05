@@ -11,7 +11,6 @@ namespace SM
 
     bool Window::Initialize(int w, int h)
     {
-
         glfwInit();
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         // glfwWindowHint(GLFW_DECORATED, appInfo.windowProperties.decorated);

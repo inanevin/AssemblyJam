@@ -10,7 +10,6 @@ struct GLFWwindow;
 #include "Common/DataStructures.hpp"
 namespace SM
 {
-
     class Window
     {
     public:
