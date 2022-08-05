@@ -11,6 +11,7 @@ set(SCHOOLMASSAGE_SOURCES
 
 src/Main.cpp
 src/glad/glad.c
+src/stb/stb_image.h
 
 )
 
