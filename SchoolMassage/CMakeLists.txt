@@ -10,22 +10,21 @@ project(SchoolMassage)
 set(SCHOOLMASSAGE_SOURCES 
 
 src/Main.cpp
-)
-
-set(SCHOOLMASSAGE_HEADERS
+src/glad/glad.c
 
 )
 
 #--------------------------------------------------------------------
 # Create executable project
 #--------------------------------------------------------------------
-add_executable(${PROJECT_NAME} ${SCHOOLMASSAGE_SOURCES} ${SCHOOLMASSAGE_HEADERS} )
+add_executable(${PROJECT_NAME} ${SCHOOLMASSAGE_SOURCES} )
 add_executable(Lina::SchoolMassage ALIAS ${PROJECT_NAME}) 
 
 #--------------------------------------------------------------------
 # Set include directories
 #--------------------------------------------------------------------
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glad/include)
 
 #--------------------------------------------------------------------
 # Links
