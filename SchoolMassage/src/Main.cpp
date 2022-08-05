@@ -8,7 +8,7 @@ int main(int argc, char** argv)
 
 	Window w;
 	if (!w.Initialize(500, 500)) {
-		SM::LOG("Window init failure :(");
+		LOG("Window init failure :(");
 		return 1;
 	}
 
