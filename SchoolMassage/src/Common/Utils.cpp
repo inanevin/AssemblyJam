@@ -20,4 +20,5 @@ namespace SM
         std::vector<uint8_t> data((std::istreambuf_iterator<char>(instream)), std::istreambuf_iterator<char>());
         return data;
     }
+
 } // namespace SM

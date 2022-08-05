@@ -14,7 +14,7 @@ namespace SM
     typedef glm::vec3  Vector3;
     typedef glm::vec4  Vector4;
     using std::vector;
-    typedef uint32_t   BackendHandle;
+    typedef uint32_t   GraphicsHandle;
 
 } // namespace SM
 

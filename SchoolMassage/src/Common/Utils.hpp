@@ -9,6 +9,7 @@ namespace SM
 {
     void                 LOG(const char* message, ...);
     std::vector<uint8_t> ReadFile(const char* filename);
+
 } // namespace SM
 
 #endif

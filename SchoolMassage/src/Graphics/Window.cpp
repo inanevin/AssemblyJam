@@ -1,6 +1,7 @@
 #include "Graphics/Window.hpp"
 #include "Common/Common.hpp"
 #include "Common/Utils.hpp"
+#include <linavg/LinaVG.hpp>
 
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
@@ -69,6 +70,8 @@ namespace SM
         auto windowResizeFunc = [](GLFWwindow* w, int wi, int he) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
             window->SetSize(Vector2i(wi, he));
+            LinaVG::Config.displayWidth = wi;
+            LinaVG::Config.displayHeight = he;
         };
 
         auto windowCloseFunc = [](GLFWwindow* w) {
