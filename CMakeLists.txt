@@ -24,10 +24,12 @@ project (AssemblyJam)
 		
 if(WIN32)
 	set(PLATFORM "Win64")
+	add_compile_definitions(SM_WIN64)
 endif()
 		
 if(UNIX)
 	set(PLATFORM "Unix")
+	add_compile_definitions(SM_UNIX)
 endif()
 
 #--------------------------------------------------------------------
