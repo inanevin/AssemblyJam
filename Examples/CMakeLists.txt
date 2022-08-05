@@ -2,7 +2,7 @@
 # Author: Inan Evin
 # www.inanevin.com
 # 
-# Copyright (C) 2018 Inan Evin
+# Copyright (C) 2022 Inan Evin
 # 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 #
@@ -13,68 +13,70 @@
 # and limitations under the License.
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 cmake_minimum_required (VERSION 3.6)
-project(Game)
+project(Examples)
 
 #--------------------------------------------------------------------
 # Set sources
 #--------------------------------------------------------------------
-set (GAME_SOURCES
-	# CORE
-	src/Main.cpp
+
+set(EXAMPLES_SOURCES 
+
+src/Main.cpp
+src/DemoScreens.cpp
+src/Backends/OpenGLGLFW.cpp
+)
+
+set(EXAMPLES_HEADERS
+
+include/Main.hpp
+include/DemoScreens.hpp
+include/Backends/OpenGLGLFW.hpp
+include/Utility/stb_image.h
 )
 
 #--------------------------------------------------------------------
-# Set headers
+# Create executable project
 #--------------------------------------------------------------------
-set(GAME_HEADERS
-
-)
+add_executable(${PROJECT_NAME} ${EXAMPLES_SOURCES} ${EXAMPLES_HEADERS})
 
 #--------------------------------------------------------------------
-# Define the library & create an alias
+# Options & Definitions
 #--------------------------------------------------------------------
-add_executable(${PROJECT_NAME} ${GAME_SOURCES} ${GAME_HEADERS})
-add_executable(Lina::Sandbox ALIAS ${PROJECT_NAME}) 
-
-#--------------------------------------------------------------------
-# Set include directories
-#--------------------------------------------------------------------
-
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/LinaVG/include)
 
 #--------------------------------------------------------------------
-# Subdirectories & linking
+# Links
 #--------------------------------------------------------------------
+target_link_libraries(${PROJECT_NAME} 
+PUBLIC Lina::VG
+)
 
+include(${CMAKE_SOURCE_DIR}/_Dependencies/glad/link.cmake)
+include(${CMAKE_SOURCE_DIR}/_Dependencies/glfw/link.cmake)
+link_glfw()
+link_glad()
 
-# Link libraries (e.g. logging)
-#target_link_libraries(${PROJECT_NAME} 
-	# ${CMAKE_THREAD_LIBS_INIT}     # Needed for unix builds to link to pthread
+add_custom_command(
+TARGET ${PROJECT_NAME}
+POST_BUILD
+COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/_Resources" "${CMAKE_BINARY_DIR}/${PROJECT_NAME}/")
 
-#)
+add_custom_command(
+TARGET ${PROJECT_NAME}
+POST_BUILD
+COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/_Resources" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/")
 
-#--------------------------------------------------------------------
-# Packages
-#--------------------------------------------------------------------
-find_package(OpenGL REQUIRED)
-
-# Launch Lina Header tool prior to building to prepare the reflection data for runtime.
-
-## add_custom_command(
-## TARGET ${PROJECT_NAME}
-## PRE_BUILD
-## COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR}/LinaHeaderTool/bin/ LinaHeader.exe)
 
 #--------------------------------------------------------------------
 # Folder structuring in visual studio
 #--------------------------------------------------------------------
 if(MSVC_IDE)
-	foreach(source IN LISTS GAME_HEADERS GAME_SOURCES)
+	foreach(source IN LISTS EXAMPLES_HEADERS EXAMPLES_SOURCES)
 		get_filename_component(source_path "${source}" PATH)
-		string(REPLACE "${LinaEngine_SOURCE_DIR}" "" relative_source_path "${source_path}")
+		string(REPLACE "${EXAMPLES_SOURCE_DIR}" "" relative_source_path "${source_path}")
 		string(REPLACE "/" "\\" source_path_msvc "${relative_source_path}")
 				source_group("${source_path_msvc}" FILES "${source}")
 	endforeach()
 endif()
-
-
