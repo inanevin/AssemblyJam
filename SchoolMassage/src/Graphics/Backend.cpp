@@ -29,6 +29,7 @@ SOFTWARE.
 #include "glad/glad.h"
 #include "Graphics/Backend.hpp"
 #include "Common/Common.hpp"
+#include "Common/Utils.hpp"
 
 #include <iostream>
 #include <stdio.h>
@@ -155,7 +156,7 @@ namespace SM
         }
         catch (const std::runtime_error& err)
         {
-            LOG("Error: Backend shader creation failed! {0}", err.what());
+            LOG("Error: Backend shader creation failed! %s", err.what());
             return false;
         }
 

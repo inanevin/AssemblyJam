@@ -4,13 +4,9 @@
 #ifndef Common_HPP
 #define Common_HPP
 
-#define FMT_HEADER_ONLY
-#include <fmt/format.h>
-
 #include <stdio.h>
 #include <iostream>
 
-#define LOG(...) SM::LogMessage(__VA_ARGS__);
 
 namespace SM
 {
@@ -23,13 +19,6 @@ namespace SM
         float       framebufferScale = 1.0f;
         const char* windowTitle      = "School Massage";
     };
-
-    template <typename... Args>
-    static void LogMessage(const Args&... args)
-    {
-      // auto a = fmt::format(args...).c_str();
-        //std::cout <<  << std::endl;
-    }
 
     extern Config g_config;
 
