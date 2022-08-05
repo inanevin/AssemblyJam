@@ -25,13 +25,18 @@ add_executable(Lina::SchoolMassage ALIAS ${PROJECT_NAME})
 #--------------------------------------------------------------------
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glad/include)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/include)
 
 #--------------------------------------------------------------------
 # Links
 #--------------------------------------------------------------------
-## target_link_libraries(${PROJECT_NAME} 
-## PRIVATE Engine
-## )
+
+if(WIN32)
+ target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/lib/glfw3.lib)
+else()
+ target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/vendor/glfw/lib/libglfw3.a)
+ endif()
+
 
 #--------------------------------------------------------------------
 # Folder structuring in visual studio
