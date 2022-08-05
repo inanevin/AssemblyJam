@@ -41,6 +41,9 @@ namespace SM
 
         glfwSetWindowUserPointer(m_glfwWindow, this);
 
+        #ifdef SM_WIN64
+
+        #endif
         auto windowResizeFunc = [](GLFWwindow* w, int wi, int he) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
             window->SetSize(Vector2i(wi, he));

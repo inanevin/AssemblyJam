@@ -24,7 +24,7 @@ project (AssemblyJam)
 		
 if(WIN32)
 	set(PLATFORM "Win64")
-	add_compile_definitions(SM_WIN64)
+	add_compile_definitions(SM_WIN)
 endif()
 		
 if(UNIX)
