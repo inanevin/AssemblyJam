@@ -26,11 +26,12 @@ namespace SM
 			opts.isFilled = true;
 			opts.textureHandle = false;
 
+			// todo(nicolas): cleanup when necessary
 			switch (tile->type)
 			{
-				case TILE_NONE:  { opts.color = LinaVG::Vec4(0,0,0,0); } break;
 				case TILE_WALL:  { opts.color = LinaVG::Vec4(0.1,0.1,0.1,1); } break;
 				case TILE_FLOOR: { opts.color = LinaVG::Vec4(0.9,0.9,0.9,1); } break;
+				default:         { opts.color = LinaVG::Vec4(0,0,0,0); } break;
 			}
 
 			int screenX = m_renderOpts.tileWidthPx * col;
@@ -51,15 +52,36 @@ namespace SM
 
 	void Tilemap::Generate()
 	{
+		SetTiles(0,0, m_cols-1,m_rows-1, TILE_WALL);
 	}
 
 	void Tilemap::Randomize()
 	{
 		for (int row=0; row < m_rows; row++)
 		for (int col=0; col < m_cols; col++)
-			GetTile(col, row)->type = (TileType) GetRandom(TILE_NONE + 1, TILE_TYPE_COUNT - 1);
+			SetTile(col, row, TileType(GetRandom(TILE_NONE + 1, TILE_TYPE_COUNT - 1)));
 	}
 
+	void Tilemap::SetTile(int col, int row, TileType type)
+	{
+		Tile* tile = GetTile(col, row);
+
+		// todo(nicolas): cleanup when necessary
+		tile->type = type;
+		switch (tile->type)
+		{
+			case TILE_WALL:  { tile->isSolid = true; } break;
+			case TILE_FLOOR: { tile->isSolid = false; } break;
+			default:         { tile->isSolid = false; } break;
+		}
+	}
+
+	void Tilemap::SetTiles(int fromCol, int fromRow, int widthCols, int heightRows, TileType type)
+	{
+		for (int row=fromRow; row < fromRow+heightRows; row++)
+		for (int col=fromCol; col < fromCol+widthCols; col++)
+			SetTile(col, row, type);
+	}
 
 	Tile* Tilemap::GetTile(int col, int row)
 	{

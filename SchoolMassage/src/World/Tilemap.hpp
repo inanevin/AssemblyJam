@@ -38,6 +38,9 @@ namespace SM
 		void Generate();
 		void Randomize(); // fill with random tiles
 
+		void SetTile(int col, int row, TileType type);
+		void SetTiles(int fromCol, int fromRow, int widthCols, int heightRows, TileType type);
+
 		Tile* GetTile(int col, int row);
 		int   GetIndex(int col, int row);
 
