@@ -61,4 +61,8 @@ namespace SM
         return low + (rand() % (high + 1));
     }
 
+    bool GetRandomBool(float chance)
+    {
+        return GetRandom(0, 1000) > int(1000.0f * chance); // lol wat
+    }
 } // namespace SM

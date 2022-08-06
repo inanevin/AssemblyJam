@@ -12,6 +12,7 @@ namespace SM
     void                 LOG(const char* message, ...);
     std::vector<uint8_t> ReadFile(const char* filename);
     int                  GetRandom(int low, int high);
+    bool                 GetRandomBool(float chance = 0.5f);
 
     template <typename T>
     static T Remap(const T& val, const T& fromLow, const T& fromHigh, const T& toLow, const T& toHigh)

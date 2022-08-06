@@ -21,7 +21,7 @@ namespace SM
 		TileType type = TILE_NONE;
 		bool isSolid = false;
 
-		LinaVG::Vec4 DEBUG_color;
+		LinaVG::Vec4 DEBUG_color = { 0,0,0,0 };
 	};
 
 	struct TilemapRenderOptions
@@ -40,7 +40,7 @@ namespace SM
 		void Randomize();
 
 		void SetTile(int col, int row, TileType type);
-		void SetTiles(int fromCol, int fromRow, int widthCols, int heightRows, TileType type);
+		void SetTiles(int fromCol, int fromRow, int width, int height, TileType type);
 
 		Tile* GetTile(int col, int row);
 		int   GetIndex(int col, int row);
@@ -62,8 +62,8 @@ namespace SM
 		struct Room {
 			int startCol = 0;
 			int startRow = 0;
-			int widthCols = 0;
-			int heightRows = 0;
+			int width = 0;
+			int height = 0;
 		};
 
 		void Start();
@@ -78,7 +78,7 @@ namespace SM
 	private:
 		Tilemap m_tilemap;
 
-		vector<Room> m_rooms;
+		vector<Room*> m_rooms;
 	};
 }
 

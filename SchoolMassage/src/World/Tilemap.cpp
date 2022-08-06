@@ -17,6 +17,8 @@ namespace SM
 		}
 		m_tiles = nullptr;
 
+		// todo clear rooms
+
 		LOG("Tilemap unloaded!");
 	}
 
@@ -29,7 +31,8 @@ namespace SM
 
 			LinaVG::StyleOptions opts;
 			opts.isFilled = true;
-			opts.textureHandle = false;
+			opts.textureHandle = 0;
+			opts.thickness = 1;
 
 			// todo(nicolas): cleanup when necessary
 			switch (tile->type)
@@ -39,7 +42,8 @@ namespace SM
 				default:         { opts.color = LinaVG::Vec4(0,0,0,0); } break;
 			}
 
-			opts.color = tile->DEBUG_color; // TEMP bsp debug
+			if (tile->DEBUG_color.w > 0.0f)
+				opts.color = tile->DEBUG_color; // :bspdebug
 
 			int screenX = m_renderOpts.tileWidthPx * col;
 			int screenY = m_renderOpts.tileHeightPx * row;
@@ -56,6 +60,9 @@ namespace SM
 
 	void Tilemap::SetTile(int col, int row, TileType type)
 	{
+		if (col >= m_cols) return; // TODO assert
+		if (row >= m_rows) return; // TODO assert
+
 		Tile* tile = GetTile(col, row);
 
 		// todo(nicolas): cleanup when necessary
@@ -68,10 +75,10 @@ namespace SM
 		}
 	}
 
-	void Tilemap::SetTiles(int fromCol, int fromRow, int widthCols, int heightRows, TileType type)
+	void Tilemap::SetTiles(int fromCol, int fromRow, int width, int height, TileType type)
 	{
-		for (int row=fromRow; row < fromRow+heightRows; row++)
-		for (int col=fromCol; col < fromCol+widthCols; col++)
+		for (int row=fromRow; row < fromRow+height; row++)
+		for (int col=fromCol; col < fromCol+width; col++)
 			SetTile(col, row, type);
 	}
 
@@ -111,24 +118,55 @@ namespace SM
 
 	void TilemapWorld::Generate()
 	{
-		m_tilemap.SetTiles(0,0, m_tilemap.GetWidth()-1,m_tilemap.GetHeight()-1, TILE_WALL);
+		m_tilemap.SetTiles(0,0, m_tilemap.GetWidth(),m_tilemap.GetHeight(), TILE_WALL);
 
 		BSPTree* tree = new BSPTree(m_tilemap.GetWidth(), m_tilemap.GetHeight());
 
-		tree->GetRoot()->SplitVertically();
-
 		struct {
-			void operator()(Tilemap* tilemap, BSPTree::Node* node, LinaVG::Vec4 debugColor)
+			void operator()(TilemapWorld* world, Tilemap* tilemap, BSPTree::Node* node, LinaVG::Vec4 debugColor, int depth)
 			{
-				for (int row=node->m_startRow; row < node->m_startRow + node->m_height; row++)
-				for (int col=node->m_startCol; col < node->m_startCol + node->m_width; col++)
-					tilemap->GetTile(col,row)->DEBUG_color = debugColor;
+				const int MAX_DEPTH = 4;
 
-				if (node->m_childLeft)  (*this)(tilemap, node->m_childLeft,  { debugColor.x + 0.1f, debugColor.y, debugColor.z, 1.0f });
-				if (node->m_childRight) (*this)(tilemap, node->m_childRight, { debugColor.x, debugColor.y, debugColor.z + 0.1f, 1.0f });
+				// :bspdebug
+				//for (int row=node->m_startRow; row < node->m_startRow + node->m_height; row++)
+				//for (int col=node->m_startCol; col < node->m_startCol + node->m_width; col++)
+				//	tilemap->GetTile(col,row)->DEBUG_color = debugColor;
+
+				if (depth < MAX_DEPTH)
+				{
+					if (GetRandomBool())
+						node->SplitVertically();
+					else
+						node->SplitHorizontally();
+				} else {
+					auto PlaceRoom = [&]()
+					{
+						Room* room = new Room;
+
+						int padding = 2;
+						room->startCol = node->m_startCol + padding;
+						room->startRow = node->m_startRow + padding;
+						room->width    = GetRandom(4, node->m_width  - padding);
+						room->height   = GetRandom(4, node->m_height - padding);
+
+						LOG("ROOM at (%d,%d) size (%d,%d)", room->startCol, room->startRow, room->width, room->height);
+
+						tilemap->SetTiles(room->startCol, room->startRow, room->width, room->height, TILE_FLOOR);
+						//for (int row=room->startRow; row < room->startRow + room->height; row++)
+						//for (int col=room->startCol; col < room->startCol + room->width; col++)
+						//	tilemap->GetTile(col,row)->DEBUG_color = { 1.0f, 0.0f, 0.0f, 1.0f };
+
+						world->m_rooms.push_back(room);
+					};
+
+					PlaceRoom();
+				}
+
+				if (node->m_childLeft)  (*this)(world, tilemap, node->m_childLeft,  { debugColor.x + 0.3f, debugColor.y, debugColor.z, 1.0f }, depth + 1);
+				if (node->m_childRight) (*this)(world, tilemap, node->m_childRight, { debugColor.x, debugColor.y, debugColor.z + 0.3f, 1.0f }, depth + 1);
 			}
 		} recurseBSPTree;
-		recurseBSPTree(&m_tilemap, tree->GetRoot(), { 0,0,0,1 });
+		recurseBSPTree(this, &m_tilemap, tree->GetRoot(), { 0,0,0,1 }, 0);
 
 		delete tree;
 		tree = nullptr;
