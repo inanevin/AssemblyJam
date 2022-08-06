@@ -7,18 +7,24 @@ namespace SM
 
     void Scene::Start()
     {
+        m_tilemap.Start();
+
         for (auto o : m_objects)
             o->Start();
     }
 
     void Scene::Tick()
     {
+        m_tilemap.Tick();
+
         for (auto o : m_objects)
             o->Tick();
     }
 
     void Scene::Render()
     {
+        m_tilemap.Render();
+
         for (auto o : m_objects)
         {
             if (o->IsVisible)
@@ -30,6 +36,7 @@ namespace SM
     {
         LOG("Scene unloaded!");
 
+        m_tilemap.Unload();
         m_objects.clear();
     }
 

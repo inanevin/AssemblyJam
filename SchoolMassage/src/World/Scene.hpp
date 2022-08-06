@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "World/Tilemap.hpp"
+
 #ifndef Scene_HPP
 #define Scene_HPP
 
@@ -31,6 +33,7 @@ namespace SM
 
     protected:
         std::vector<Object*> m_objects;
+        Tilemap m_tilemap;
     };
 } // namespace SM
 #endif

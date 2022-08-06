@@ -52,6 +52,8 @@ src/World/MainScene.hpp
 src/World/MainScene.cpp
 src/World/Player.hpp
 src/World/Player.cpp
+src/World/Tilemap.hpp
+src/World/Tilemap.cpp
 
 )
 
