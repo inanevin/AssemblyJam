@@ -1,4 +1,4 @@
-﻿/*
+/*
 This file is a part of: LinaVG
 https://github.com/inanevin/LinaVG
 
@@ -3146,9 +3146,9 @@ namespace LinaVG
         {
 // _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
 #pragma warning(disable : 4996)
-
-            std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> cv;
-            auto                                                        str32 = cv.from_bytes(text);
+            /*
+            //std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> cv;
+            //auto                                                        str32 = cv.from_bytes(text);
             std::u32string::iterator                                    it;
             int                                                         counter = 0;
             for (it = str32.begin(); it < str32.end(); it++)
@@ -3158,6 +3158,7 @@ namespace LinaVG
                 // drawChar(ch);
                 counter++;
             }
+             */
         }
         else
         {

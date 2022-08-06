@@ -41,12 +41,18 @@ Timestamp: 3/26/2022 10:36:46 AM
 
 // Headers here.
 #include <functional>
+#include <list>
+#include <cmath>
+#include <type_traits>
+#include <unordered_map>
+#include <string>
+
+#define _ASSERT
 
 namespace LinaVG
 {
 
 #define LINAVG_STRING std::string
-#include <unordered_map>
 #define LINAVG_MAP     std::unordered_map
 #define LINAVG_MEMCPY  std::memcpy
 #define LINAVG_MEMMOVE std::memmove
@@ -244,7 +250,7 @@ namespace LinaVG
 
         inline void shrink(int size)
         {
-            _ASSERT(size <= m_size);
+            //_ASSERT(size <= m_size);
             m_size = size;
         }
 
