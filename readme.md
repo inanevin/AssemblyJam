@@ -22,6 +22,5 @@ cmake .. -G Xcode
 ```
 
 - open the `AssemblyJam.xcodeproj`
-- select the binary `Edit Scheme` > `Run` > `Info` > `Executable` > `SchoolMassage`
+- select the binary `Edit Scheme` > `Run` > `Info` > `Executable` > `SM`
 - ???
-- shoot the fuckers
