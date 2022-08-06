@@ -33,6 +33,11 @@ namespace SM
         glfwWindowHint(GLFW_DECORATED, g_config.decoratedWindow);
         glfwWindowHint(GLFW_RESIZABLE, g_config.resizableWindow);
 
+        #ifdef SM_UNIX
+        glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_FALSE);
+        glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
+        #endif
+
         auto*              primaryMonitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode           = glfwGetVideoMode(primaryMonitor);
 
