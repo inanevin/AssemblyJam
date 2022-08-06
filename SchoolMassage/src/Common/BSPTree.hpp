@@ -15,6 +15,7 @@ namespace SM
 		class Node
 		{
 		public:
+			Node(Node* parent) : m_parent(parent) {}
 			~Node();
 
 			Node* m_parent = nullptr;
@@ -23,12 +24,19 @@ namespace SM
 
 			int m_startCol = 0;
 			int m_startRow = 0;
-			int m_widthCols = 0;
-			int m_heightRows = 0;
+			int m_width = 0;
+			int m_height = 0;
+
+			void SplitVertically();
+			void SplitHorizontally();
+
+			bool IsRoot() { return m_parent == nullptr; }
 		};
 
-		BSPTree();
+		BSPTree(int tilemapWidth, int tilemapHeight);
 		~BSPTree();
+
+		Node* GetRoot() { return m_root; }
 
 	private:
 		Node* m_root = nullptr;

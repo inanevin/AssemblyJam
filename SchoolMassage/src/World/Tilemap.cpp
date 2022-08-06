@@ -108,9 +108,12 @@ namespace SM
 
 	void TilemapWorld::Generate()
 	{
-		m_tilemap.SetTiles(0,0, m_tilemap.GetWidth()-1,m_tilemap.GetHeight(), TILE_WALL);
+		m_tilemap.SetTiles(0,0, m_tilemap.GetWidth()-1,m_tilemap.GetHeight()-1, TILE_WALL);
 
-		BSPTree* tree = new BSPTree;
+		BSPTree* tree = new BSPTree(m_tilemap.GetWidth(), m_tilemap.GetHeight());
+
+		tree->GetRoot()->SplitVertically();
+
 		delete tree;
 		tree = nullptr;
 	}
