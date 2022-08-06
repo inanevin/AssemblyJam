@@ -56,7 +56,7 @@ endif()
 # Sub directories
 #--------------------------------------------------------------------
 
-add_subdirectory(SchoolMassage)
+add_subdirectory(SM)
 
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SchoolMassage)
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SM)
 

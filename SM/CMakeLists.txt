@@ -1,6 +1,6 @@
 
 cmake_minimum_required (VERSION 3.6)
-project(SchoolMassage)
+project(SM)
 
 #--------------------------------------------------------------------
 # Set sources
@@ -67,7 +67,7 @@ src/World/Bullet.hpp
 # Create executable project
 #--------------------------------------------------------------------
 add_executable(${PROJECT_NAME} ${SCHOOLMASSAGE_SOURCES} )
-add_executable(Lina::SchoolMassage ALIAS ${PROJECT_NAME}) 
+add_executable(Lina::SM ALIAS ${PROJECT_NAME}) 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 if(NOT WIN32)
