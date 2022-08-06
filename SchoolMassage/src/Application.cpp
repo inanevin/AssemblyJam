@@ -1,6 +1,7 @@
 #include "Application.hpp"
 #include "Common/Utils.hpp"
 #include "Common/Common.hpp"
+#include "linavg/LinaVG.hpp"
 
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -44,13 +45,17 @@ namespace SM
             }
 
             m_inputEngine.Tick();
-   
+
             // Update game
             m_gameManager.OnTick();
 
             // Clear renderer & call game render.
             m_renderer.Clear();
+
+            LinaVG::StartFrame();
             m_gameManager.OnRender();
+            LinaVG::Render();
+            LinaVG::EndFrame();
 
             // Swap
             m_window.Update();

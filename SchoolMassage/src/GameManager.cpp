@@ -2,16 +2,20 @@
 #include "World/Scene.hpp"
 #include "Common/InputEngine.hpp"
 #include "Common/Utils.hpp"
-#include "linavg/LinaVG.hpp"
+#include "Graphics/GameRenderer.hpp"
+
 namespace SM
 {
     GameManager* GameManager::_ptr = 0;
     Scene test;
+    GraphicsHandle texture;
 
     void GameManager::OnStart()
     {
         _ptr = this;
         m_currentScene = &test;
+
+        texture = GameRenderer::_ptr->CreateTexture("Resources/test.png");
     }
 
     void GameManager::OnTick()
@@ -27,17 +31,6 @@ namespace SM
             return;
 
         m_currentScene->Render();
-
-        LinaVG::StartFrame();
-
-        LinaVG::StyleOptions opts;
-        opts.isFilled = true;
-        opts.color = LinaVG::Vec4(1,0,0,1);
-        static float wtf = 0.0f;
-        wtf += 1.0f;
-        LinaVG::DrawRect(LinaVG::Vec2(0,wtf), LinaVG::Vec2(200, 200), opts);
-        LinaVG::Render();
-        LinaVG::EndFrame();
 
     }
 
