@@ -133,7 +133,7 @@ namespace LinaVG
 
     void Render()
     {
-        auto& renderBuffs = [](int drawOrder, DrawBufferShapeType shapeType) {
+        const auto& renderBuffs = [](int drawOrder, DrawBufferShapeType shapeType) {
             for (int i = 0; i < Internal::g_rendererData.m_defaultBuffers.m_size; i++)
             {
                 DrawBuffer& buf = Internal::g_rendererData.m_defaultBuffers[i];

@@ -19,7 +19,6 @@ namespace SM
         virtual void Start();
         virtual void Tick();
         virtual void Render();
-        virtual void Load();
         virtual void Unload();
         virtual void OnKey(int key, int action);
         virtual void OnMouse(int button, int action);

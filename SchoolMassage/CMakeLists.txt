@@ -58,6 +58,10 @@ add_executable(${PROJECT_NAME} ${SCHOOLMASSAGE_SOURCES} )
 add_executable(Lina::SchoolMassage ALIAS ${PROJECT_NAME}) 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
+if(NOT WIN32)
+set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-Wno-pragma-once-outside-header")
+endif()
+
 #--------------------------------------------------------------------
 # Set include directories
 #--------------------------------------------------------------------

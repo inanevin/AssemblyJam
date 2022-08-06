@@ -26,11 +26,6 @@ namespace SM
         }
     }
 
-    void Scene::Load()
-    {
-        LOG("Scene loaded!");
-        Start();
-    }
     void Scene::Unload()
     {
         LOG("Scene unloaded!");

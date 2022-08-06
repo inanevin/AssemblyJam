@@ -41,6 +41,7 @@ Timestamp: 3/26/2022 10:42:37 AM
 
 // Headers here.
 #include "Common.hpp"
+#include <cmath>
 
 namespace LinaVG
 {

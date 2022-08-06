@@ -38,15 +38,13 @@ namespace SM
         if (m_currentScene)
             m_currentScene->Unload();
         m_currentScene = toLoad;
-        m_currentScene->Load();
+        m_currentScene->Start();
     }
 
     void GameManager::OnKey(int key, int action)
     {
         if (!m_currentScene)
             return;
-
-
 
         m_currentScene->OnKey(key, action);
     }
