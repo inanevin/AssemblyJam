@@ -34,6 +34,9 @@ SOFTWARE.
 #include <iostream>
 #include <stdio.h>
 
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+
 namespace LinaVG::Backend
 {
     GLState g_glState;
@@ -234,9 +237,9 @@ namespace LinaVG::Backend
         else
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-        #ifdef SM_WIN
+#ifdef SM_WIN
         glViewport(0, 0, (GLsizei)Config.displayWidth, (GLsizei)Config.displayHeight);
-        #endif
+#endif
 
         // Ortho projection matrix.
         int fb_width  = (int)(Config.displayWidth * Config.framebufferScale.x);
@@ -249,41 +252,63 @@ namespace LinaVG::Backend
 
         Internal::g_backendData.m_skipDraw = false;
 
-        float       L    = static_cast<float>(0);
-        float       R    = static_cast<float>(0 + Config.displayWidth);
-        float       T    = static_cast<float>(0);
-        float       B    = static_cast<float>(0 + Config.displayHeight);
-        const float zoom = 1.0f;
+        const float zoom = Config.debugOrthoProjectionZoom;
+        float       L    = static_cast<float>(0 - zoom * Config.displayWidth);
+        float       R    = static_cast<float>(Config.displayWidth + Config.displayWidth * zoom);
+        float       T    = static_cast<float>(-zoom * Config.displayHeight);
+        float       B    = static_cast<float>(0 + Config.displayHeight + Config.displayHeight * zoom);
+        
 
-        L *= zoom;
-        R *= zoom;
-        T *= zoom;
-        B *= zoom;
+       //L *= zoom;
+       //R *= zoom;
+       //T *= zoom;
+       //B *= zoom;
 
         L += Config.debugOrthoOffset.x;
         R += Config.debugOrthoOffset.x;
         T += Config.debugOrthoOffset.y;
         B += Config.debugOrthoOffset.y;
-
-        Internal::g_backendData.m_proj[0][0] = 2.0f / (R - L);
-        Internal::g_backendData.m_proj[0][1] = 0.0f;
-        Internal::g_backendData.m_proj[0][2] = 0.0f;
-        Internal::g_backendData.m_proj[0][3] = 0.0f;
-
-        Internal::g_backendData.m_proj[1][0] = 0.0f;
-        Internal::g_backendData.m_proj[1][1] = 2.0f / (T - B);
-        Internal::g_backendData.m_proj[1][2] = 0.0f;
-        Internal::g_backendData.m_proj[1][3] = 0.0f;
-
-        Internal::g_backendData.m_proj[2][0] = 0.0f;
-        Internal::g_backendData.m_proj[2][1] = 0.0f;
-        Internal::g_backendData.m_proj[2][2] = -1.0f;
-        Internal::g_backendData.m_proj[2][3] = 0.0f;
-
-        Internal::g_backendData.m_proj[3][0] = (R + L) / (L - R);
-        Internal::g_backendData.m_proj[3][1] = (T + B) / (B - T);
-        Internal::g_backendData.m_proj[3][2] = 0.0f;
-        Internal::g_backendData.m_proj[3][3] = 1.0f;
+       //auto orth = glm::ortho(L, R, B, T, 0.0f, 10.0f);
+       //
+       //Internal::g_backendData.m_proj[0][0] = orth[0][0];
+       //Internal::g_backendData.m_proj[0][1] = orth[0][1];
+       //Internal::g_backendData.m_proj[0][2] = orth[0][2];
+       //Internal::g_backendData.m_proj[0][3] = orth[0][3];
+       //
+       //Internal::g_backendData.m_proj[1][0] = orth[1][0];
+       //Internal::g_backendData.m_proj[1][1] = orth[1][1];
+       //Internal::g_backendData.m_proj[1][2] = orth[1][2];
+       //Internal::g_backendData.m_proj[1][3] = orth[1][3];
+       //
+       //Internal::g_backendData.m_proj[2][0] = orth[2][0];
+       //Internal::g_backendData.m_proj[2][1] = orth[2][1];
+       //Internal::g_backendData.m_proj[2][2] = orth[2][2];
+       //Internal::g_backendData.m_proj[2][3] = orth[2][3];
+       //
+       //Internal::g_backendData.m_proj[3][0] = orth[3][0];
+       //Internal::g_backendData.m_proj[3][1] = orth[3][1];
+       //Internal::g_backendData.m_proj[3][2] = orth[3][2];
+       //Internal::g_backendData.m_proj[3][3] = orth[3][3];
+       
+       Internal::g_backendData.m_proj[0][0] = 2.0f / (R - L);
+       Internal::g_backendData.m_proj[0][1] = 0.0f;
+       Internal::g_backendData.m_proj[0][2] = 0.0f;
+       Internal::g_backendData.m_proj[0][3] = 0.0f;
+       
+       Internal::g_backendData.m_proj[1][0] = 0.0f;
+       Internal::g_backendData.m_proj[1][1] = 2.0f / (T - B);
+       Internal::g_backendData.m_proj[1][2] = 0.0f;
+       Internal::g_backendData.m_proj[1][3] = 0.0f;
+       
+       Internal::g_backendData.m_proj[2][0] = 0.0f;
+       Internal::g_backendData.m_proj[2][1] = 0.0f;
+       Internal::g_backendData.m_proj[2][2] = -1.0f;
+       Internal::g_backendData.m_proj[2][3] = 0.0f;
+       
+       Internal::g_backendData.m_proj[3][0] = (R + L) / (L - R);
+       Internal::g_backendData.m_proj[3][1] = (T + B) / (B - T);
+       Internal::g_backendData.m_proj[3][2] = 0.0f;
+       Internal::g_backendData.m_proj[3][3] = 1.0f;
 
         glBindVertexArray(Internal::g_backendData.m_vao);
     }
@@ -567,7 +592,7 @@ namespace LinaVG::Backend
                 Config.errorCallback("LinaVG: Backend Error -> Shader vertex compilation failed!");
                 Config.errorCallback(infoLog);
             }
-         
+
             throw std::runtime_error("");
         }
 
@@ -586,7 +611,7 @@ namespace LinaVG::Backend
                 Config.errorCallback("LinaVG: Backend Error -> Shader fragment compilation failed!");
                 Config.errorCallback(infoLog);
             }
-         
+
             throw std::runtime_error("");
         }
 

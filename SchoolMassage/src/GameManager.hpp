@@ -24,6 +24,7 @@ namespace SM
         void OnKey(int key, int action);
         void OnMouse(int button, int action);
 
+
         static GameManager* _ptr;
 
     private:

@@ -23,9 +23,9 @@ namespace SM
         {
             return m_fps;
         }
-        inline double GetDelta()
+        inline float GetDelta()
         {
-            return m_delta;
+            return static_cast<float>(m_delta);
         }
 
         double GetElapsedTime();

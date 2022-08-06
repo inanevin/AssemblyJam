@@ -35,7 +35,7 @@ namespace SM
         while (true)
         {
             const double time = glfwGetTime();
-            m_delta           = lastTime - time;
+            m_delta           = time - lastTime;
             lastTime          = time;
 
             if (time - lastFPSTime >= 1.0f)

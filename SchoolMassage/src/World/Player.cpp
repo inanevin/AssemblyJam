@@ -3,16 +3,20 @@
 #include "Graphics/GameRenderer.hpp"
 #include "Common/InputEngine.hpp"
 #include "Application.hpp"
+#include "Common/Utils.hpp"
+#include "glm/gtx/norm.hpp"
+
 #include <linavg/LinaVG.hpp>
 
 namespace SM
 {
-    Vec2 playerTileSize = Vec2(320, 320);
-    Vec2 movementSpeed  = Vec2(300, 300);
-    Vec2 velocity       = Vec2(0, 0);
-    int walkAnimCounter = 0;
-    float walkAnimSwitchTime = 0.0f;
+    Player* Player::_ptr = nullptr;
+
+    Vec2  playerTileSize     = Vec2(100, 100);
+    int   walkAnimCounter    = 0;
+    float walkAnimSwitchTime = 0.1f;
     float walkAnimLastSwitch = 0.0f;
+    float movementSpeed      = 500.0f;
 
     enum class PlayerState
     {
@@ -31,6 +35,11 @@ namespace SM
         m_walkTextures[1] = GameRenderer::_ptr->CreateTexture("Resources/Player/Walk2.png");
         m_currentTexture  = m_idleTexture;
         playerState       = PlayerState::Idle;
+        _ptr              = this;
+
+        // Movement properties
+        m_pos.x = g_config.windowWidth / 2.0f;
+        m_pos.y = g_config.windowHeight / 2.0f;
     }
 
     void Player::Tick()
@@ -38,35 +47,41 @@ namespace SM
         const float delta = Application::_ptr->GetDelta();
 
         Vec2 currentPos = m_pos;
+        Vec2 input      = Vec2(InputEngine::_ptr->GetHorizontalAxis(), -InputEngine::_ptr->GetVerticalAxis());
 
-        if (InputEngine::_ptr->GetKey(KEY_W))
-            currentPos.y += movementSpeed.y * delta;
+        if (glm::length2(input) > 0.1f)
+            playerState = PlayerState::Walk;
+        else
+            playerState = PlayerState::Idle;
 
-        if (InputEngine::_ptr->GetKey(KEY_S))
-            currentPos.y -= movementSpeed.x * delta;
+        m_pos += input * delta * movementSpeed;
 
-        if (InputEngine::_ptr->GetKey(KEY_A))
-            currentPos.x += movementSpeed.x * delta;
-
-        if (InputEngine::_ptr->GetKey(KEY_D))
-            currentPos.x -= movementSpeed.x * delta;
-
-        // Check current pos against collisions & walls etc.
-        // If can still move
-
-       //const Vec2 delta = currentPos - m_pos;
-       //
-       //if (glm::length(delta) > 0.0f)
-       //    playerState = PlayerState::Walk;
-
-        m_pos = currentPos;
+        Animate();
     }
 
     void Player::Render()
     {
         LinaVG::StyleOptions opts;
-        opts.textureHandle = m_currentTexture;
-        LinaVG::DrawImage(m_currentTexture, m_pos, playerTileSize);
+        opts.color = LinaVG::Vec4(1,0,0,1);
+
+        LinaVG::DrawRect(Vec2(0,0), Vec2(100, 100), opts);
+
+        opts.color = LinaVG::Vec4(1, 1, 0, 1);
+        LinaVG::DrawRect(Vec2(g_config.windowWidth - 100, 0), Vec2(g_config.windowWidth, 100), opts);
+
+      opts.color = LinaVG::Vec4(1, 1, 1, 1);
+      LinaVG::DrawRect(Vec2(g_config.windowWidth - 100, g_config.windowHeight - 100), Vec2(g_config.windowWidth, g_config.windowHeight), opts);
+      
+      opts.color = LinaVG::Vec4(0, 1, 1, 1);
+      LinaVG::DrawRect(Vec2(0, g_config.windowHeight - 100), Vec2(100, g_config.windowHeight), opts);
+      
+      opts.textureHandle = m_currentTexture;
+      LinaVG::DrawImage(m_currentTexture, m_pos, playerTileSize);
+    }
+
+    void Player::Unload()
+    {
+        _ptr = 0;
     }
 
     void Player::Animate()
@@ -77,8 +92,16 @@ namespace SM
             if (elapsed > walkAnimLastSwitch + walkAnimSwitchTime)
             {
                 walkAnimLastSwitch = elapsed;
+                m_currentTexture   = m_walkTextures[walkAnimCounter];
+                walkAnimCounter++;
+
+                if (walkAnimCounter > 1)
+                    walkAnimCounter = 0;
             }
-            
+        }
+        else
+        {
+            m_currentTexture = m_idleTexture;
         }
     }
 

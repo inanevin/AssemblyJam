@@ -28,16 +28,17 @@ namespace SM
     {
 
     public:
-
-        bool GetKey(int keyCode);
-        bool GetKeyDown(int keyCode);
-        bool GetKeyUp(int keyCode);
-        bool GetMouseButton(int index);
-        bool GetMouseButtonDown(int index);
-        bool GetMouseButtonUp(int index);
-        void SetCursorMode(CursorMode mode);
-        void SetMousePosition(const Vec2& v) const;
-        void OnWindowContextCreated(void* window);
+        bool  GetKey(int keyCode);
+        bool  GetKeyDown(int keyCode);
+        bool  GetKeyUp(int keyCode);
+        bool  GetMouseButton(int index);
+        bool  GetMouseButtonDown(int index);
+        bool  GetMouseButtonUp(int index);
+        float GetHorizontalAxis();
+        float GetVerticalAxis();
+        void  SetCursorMode(CursorMode mode);
+        void  SetMousePosition(const Vec2& v) const;
+        void  OnWindowContextCreated(void* window);
 
         inline void OnScroll(double x, double y)
         {

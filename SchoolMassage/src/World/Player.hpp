@@ -2,6 +2,7 @@
 #pragma once
 #include "Common/Common.hpp"
 #include "Object.hpp"
+
 #include <vector>
 #include <string>
 
@@ -19,6 +20,9 @@ namespace SM
         virtual void Start() override;
         virtual void Tick() override;
         virtual void Render() override;
+        virtual void Unload() override;
+
+        static Player* _ptr;
 
     private:
         void Animate();

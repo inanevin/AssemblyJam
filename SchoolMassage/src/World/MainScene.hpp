@@ -1,6 +1,7 @@
 
 #pragma once
 #include "Scene.hpp"
+#include "Camera.hpp"
 #include <vector>
 #include <string>
 
@@ -16,6 +17,10 @@ namespace SM
         virtual ~MainScene(){};
 
         virtual void Start() override;
+        virtual void Tick() override;
+
+    private:
+        Camera m_cam;
     };
 } // namespace SM
 #endif

@@ -3,13 +3,19 @@
 
 namespace SM
 {
-	Player player;
+    Player player;
 
-	void MainScene::Start()
-	{
-		player.Name = "Player";
-		AddObject(&player);
+    void MainScene::Start()
+    {
+        player.Name = "Player";
+        AddObject(&player);
 
-		Scene::Start();
-	}
-}
+        Scene::Start();
+    }
+
+    void MainScene::Tick()
+    {
+        Scene::Tick();
+        m_cam.Tick();
+    }
+} // namespace SM

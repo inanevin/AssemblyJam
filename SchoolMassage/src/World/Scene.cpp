@@ -30,6 +30,9 @@ namespace SM
     {
         LOG("Scene unloaded!");
 
+        for (auto o : m_objects)
+            o->Unload();
+
         m_objects.clear();
     }
 

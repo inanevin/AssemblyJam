@@ -65,6 +65,26 @@ namespace SM
         return flag;
     }
 
+    float InputEngine::GetHorizontalAxis()
+    {
+        if (GetKey(KEY_D))
+            return 1.0f;
+        else if (GetKey(KEY_A))
+            return -1.0f;
+        else
+            return 0.0f;
+    }
+
+    float InputEngine::GetVerticalAxis()
+    {
+        if (GetKey(KEY_W))
+            return 1.0f;
+        else if (GetKey(KEY_S))
+            return -1.0f;
+        else
+            return 0.0f;
+    }
+
     Vec2 InputEngine::GetRawMouseAxis()
     {
         // Get the cursor position.
