@@ -5,6 +5,7 @@
 #include <fstream>  // readfile shit
 #include <stdio.h>  // vprintf, printf
 #include <stdarg.h> // varargs
+#include <stdlib.h> // varargs
 
 namespace SM
 {
@@ -53,6 +54,11 @@ namespace SM
 
         // We have an overlap
         return true;
+    }
+
+    int GetRandom(int low, int high)
+    {
+        return low + (rand() % (high + 1));
     }
 
 } // namespace SM

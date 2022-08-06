@@ -20,6 +20,7 @@ namespace SM
             return;
         }
 
+        // note(nicolas): just to test that working dir is correct
         auto v = ReadFile("Resources/map.txt");
         LOG("DEBUG map text file size: %u", v.size());
 
