@@ -4,6 +4,7 @@
 #include "Graphics/Window.hpp"
 #include "Graphics/GameRenderer.hpp"
 #include "GameManager.hpp"
+#include "Common/InputEngine.hpp"
 
 #ifndef App_HPP
 #define App_HPP
@@ -34,7 +35,8 @@ namespace SM
         double       m_delta = 0;
         Window       m_window;
         GameRenderer m_renderer;
-        GameManager m_gameManager;
+        GameManager  m_gameManager;
+        InputEngine  m_inputEngine;
     };
 } // namespace SM
 #endif

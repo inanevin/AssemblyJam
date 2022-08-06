@@ -29,10 +29,25 @@ namespace SM
     void Scene::Load()
     {
         LOG("Scene loaded!");
+        Start();
     }
     void Scene::Unload()
     {
         LOG("Scene unloaded!");
+
+        m_objects.clear();
+    }
+
+    void Scene::OnKey(int key, int action)
+    {
+        for (auto& o : m_objects)
+            o.OnKey(key, action);
+    }
+
+    void Scene::OnMouse(int button, int action)
+    {
+        for (auto& o : m_objects)
+            o.OnMouse(button, action);
     }
 
     void Scene::AddObject(Object& obj)

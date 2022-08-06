@@ -30,6 +30,9 @@ src/Common/Utils.hpp
 src/Common/Utils.cpp
 src/Common/Common.hpp
 src/Common/Common.cpp
+src/Common/InputMapping.hpp
+src/Common/InputEngine.hpp
+src/Common/InputEngine.cpp
 
 # linavg
 src/linavg/Backends/GL/GLBackend.cpp

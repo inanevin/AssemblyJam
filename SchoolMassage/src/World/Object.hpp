@@ -17,6 +17,9 @@ namespace SM
         virtual void Start(){};
         virtual void Tick(){};
         virtual void Render(){};
+        virtual void OnKey(int key, int action) {};
+        virtual void OnMouse(int button, int action){};
+
         inline bool  GetVisible()
         {
             return m_isVisible;

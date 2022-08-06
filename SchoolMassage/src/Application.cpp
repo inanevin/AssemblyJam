@@ -22,6 +22,7 @@ namespace SM
         auto v = ReadFile("Resources/map.txt");
         LOG("DEBUG map text file size: %u", v.size());
 
+        m_inputEngine.Initialize();
         m_renderer.Initialize();
 
         double lastTime    = glfwGetTime();
@@ -29,6 +30,7 @@ namespace SM
         int    totalFrames = 0;
 
         m_gameManager.OnStart();
+
         while (true)
         {
             const double time = glfwGetTime();
@@ -41,9 +43,8 @@ namespace SM
                 totalFrames = 0;
             }
 
-            // Swap & poll
-            m_window.Update();
-
+            m_inputEngine.Tick();
+   
             // Update game
             m_gameManager.OnTick();
 
@@ -51,10 +52,14 @@ namespace SM
             m_renderer.Clear();
             m_gameManager.OnRender();
 
+            // Swap
+            m_window.Update();
+
             totalFrames++;
         }
 
         m_gameManager.OnEnd();
         m_renderer.Terminate();
+        m_inputEngine.Terminate();
     }
 } // namespace SM

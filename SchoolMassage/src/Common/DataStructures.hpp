@@ -4,6 +4,7 @@
 #ifndef DataStructures_HPP
 #define DataStructures_HPP
 
+#include "InputMapping.hpp"
 #include <glm/glm.hpp>
 #include <vector>
 

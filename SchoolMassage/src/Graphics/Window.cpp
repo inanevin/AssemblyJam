@@ -1,6 +1,8 @@
 #include "Graphics/Window.hpp"
 #include "Common/Common.hpp"
 #include "Common/Utils.hpp"
+#include "GameManager.hpp"
+#include "Common/InputEngine.hpp"
 #include <linavg/LinaVG.hpp>
 
 #include "glad/glad.h"
@@ -82,14 +84,17 @@ namespace SM
 
         auto windowKeyFunc = [](GLFWwindow* w, int key, int scancode, int action, int modes) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
+            GameManager::_ptr->OnKey(key, action);
         };
 
         auto windowButtonFunc = [](GLFWwindow* w, int button, int action, int modes) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
+            GameManager::_ptr->OnMouse(button, action);
         };
 
         auto windowMouseScrollFunc = [](GLFWwindow* w, double xOff, double yOff) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
+            InputEngine::_ptr->OnScroll(xOff, yOff);
         };
 
         auto windowCursorPosFunc = [](GLFWwindow* w, double xPos, double yPos) {
@@ -108,6 +113,7 @@ namespace SM
         glfwSetScrollCallback(m_glfwWindow, windowMouseScrollFunc);
         glfwSetCursorPosCallback(m_glfwWindow, windowCursorPosFunc);
         glfwSetWindowFocusCallback(m_glfwWindow, windowFocusFunc);
+        InputEngine::_ptr->OnWindowContextCreated(m_userPtr);
 
         return true;
     }
@@ -122,7 +128,6 @@ namespace SM
     void Window::Update()
     {
         glfwSwapBuffers(m_glfwWindow);
-        glfwPollEvents();
     }
 
     void Window::SetSize(const Vec2i& size)

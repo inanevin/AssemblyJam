@@ -38,7 +38,7 @@ namespace SM
         {
             return m_pos;
         }
-
+      
         static Window* _ptr;
 
     private:
