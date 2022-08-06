@@ -8,7 +8,7 @@ namespace SM
 	{
 		m_tiles = new Tile[m_cols * m_rows];
 
-		Generate();
+		Randomize();
 	}
 
 	void Tilemap::Tick()
@@ -51,25 +51,13 @@ namespace SM
 
 	void Tilemap::Generate()
 	{
+	}
+
+	void Tilemap::Randomize()
+	{
 		for (int row=0; row < m_rows; row++)
 		for (int col=0; col < m_cols; col++)
-		{
-			Tile* tile = GetTile(col, row);
-
-			int r = GetRandom(0, 1);
-			switch (r) {
-				case 0: {
-					tile->type = TILE_FLOOR;
-					tile->isSolid = false;
-					break;
-				}
-				default: {
-					tile->type = TILE_WALL;
-					tile->isSolid = true;
-					break;
-				}
-			}
-		}
+			GetTile(col, row)->type = (TileType) GetRandom(TILE_NONE + 1, TILE_TYPE_COUNT - 1);
 	}
 
 

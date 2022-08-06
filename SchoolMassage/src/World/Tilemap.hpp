@@ -12,6 +12,7 @@ namespace SM
 		TILE_NONE = 0,
 		TILE_WALL,
 		TILE_FLOOR,
+		TILE_TYPE_COUNT
 	};
 
 	struct Tile
@@ -22,8 +23,8 @@ namespace SM
 
 	struct TilemapRenderOptions
 	{
-		int tileWidthPx = 64;
-		int tileHeightPx = 64;
+		int tileWidthPx = 8;
+		int tileHeightPx = 8;
 	};
 
 	class Tilemap
@@ -35,6 +36,7 @@ namespace SM
 		void Unload();
 
 		void Generate();
+		void Randomize(); // fill with random tiles
 
 		Tile* GetTile(int col, int row);
 		int   GetIndex(int col, int row);
@@ -43,8 +45,8 @@ namespace SM
 		TilemapRenderOptions m_renderOpts;
 
 		Tile* m_tiles = nullptr;
-		int m_cols = 8;
-		int m_rows = 8;
+		int m_cols = 64;
+		int m_rows = 64;
 	};
 }
 
