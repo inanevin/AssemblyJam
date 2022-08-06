@@ -13,7 +13,7 @@ namespace SM
     {
     public:
         MainScene() = default;
-        ~MainScene(){};
+        virtual ~MainScene(){};
 
         virtual void Start() override;
     };

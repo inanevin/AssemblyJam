@@ -14,7 +14,7 @@ namespace SM
     {
     public:
         Scene() = default;
-        ~Scene(){};
+        virtual ~Scene(){};
 
         virtual void Start();
         virtual void Tick();
@@ -23,14 +23,14 @@ namespace SM
         virtual void OnKey(int key, int action);
         virtual void OnMouse(int button, int action);
 
-        virtual void                 AddObject(Object& obj);
-        virtual void                 RemoveObject(const Object& obj);
+        virtual void                 AddObject(Object* obj);
+        virtual void                 RemoveObject(const Object* obj);
         virtual void                 RemoveObjectByName(const std::string& name);
         virtual Object*              FindObjectByName(const std::string& name);
         virtual std::vector<Object*> FindObjectsByTag(const std::string& tag);
 
     protected:
-        std::vector<Object> m_objects;
+        std::vector<Object*> m_objects;
     };
 } // namespace SM
 #endif

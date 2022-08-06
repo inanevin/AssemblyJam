@@ -4,18 +4,17 @@
 #include "Common/Utils.hpp"
 #include "Graphics/GameRenderer.hpp"
 
+#include "World/MainScene.hpp"
+
 namespace SM
 {
     GameManager* GameManager::_ptr = 0;
-    Scene test;
-    GraphicsHandle texture;
+    MainScene    mainScene;
 
     void GameManager::OnStart()
     {
         _ptr = this;
-        m_currentScene = &test;
-
-        texture = GameRenderer::_ptr->CreateTexture("Resources/test.png");
+        SwitchScene(&mainScene);
     }
 
     void GameManager::OnTick()
@@ -31,7 +30,6 @@ namespace SM
             return;
 
         m_currentScene->Render();
-
     }
 
     void GameManager::OnEnd()
@@ -42,6 +40,7 @@ namespace SM
     {
         if (m_currentScene)
             m_currentScene->Unload();
+
         m_currentScene = toLoad;
         m_currentScene->Start();
     }

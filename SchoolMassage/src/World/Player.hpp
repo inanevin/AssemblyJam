@@ -5,8 +5,8 @@
 #include <vector>
 #include <string>
 
-#ifndef Scene_HPP
-#define Scene_HPP
+#ifndef Player_HPP
+#define Player_HPP
 
 namespace SM
 {
@@ -21,7 +21,10 @@ namespace SM
         virtual void Render() override;
 
     private:
-        
+        void Animate();
+
+    private:
+        GraphicsHandle m_currentTexture;
         GraphicsHandle m_idleTexture;
         GraphicsHandle m_walkTextures[2];
     };

@@ -7,22 +7,22 @@ namespace SM
 
     void Scene::Start()
     {
-        for (auto& o : m_objects)
-            o.Start();
+        for (auto o : m_objects)
+            o->Start();
     }
 
     void Scene::Tick()
     {
-        for (auto& o : m_objects)
-            o.Tick();
+        for (auto o : m_objects)
+            o->Tick();
     }
 
     void Scene::Render()
     {
-        for (auto& o : m_objects)
+        for (auto o : m_objects)
         {
-            if (o.GetVisible())
-                o.Render();
+            if (o->IsVisible)
+                o->Render();
         }
     }
 
@@ -36,27 +36,27 @@ namespace SM
     void Scene::OnKey(int key, int action)
     {
         for (auto& o : m_objects)
-            o.OnKey(key, action);
+            o->OnKey(key, action);
     }
 
     void Scene::OnMouse(int button, int action)
     {
-        for (auto& o : m_objects)
-            o.OnMouse(button, action);
+        for (auto o : m_objects)
+            o->OnMouse(button, action);
     }
 
-    void Scene::AddObject(Object& obj)
+    void Scene::AddObject(Object* obj)
     {
         m_objects.push_back(obj);
-        obj.ID = OBJ_ID_COUNTER++;
+        obj->ID = OBJ_ID_COUNTER++;
     }
 
-    void Scene::RemoveObject(const Object& obj)
+    void Scene::RemoveObject(const Object* obj)
     {
-        std::vector<Object>::iterator it = m_objects.begin();
+        std::vector<Object*>::iterator it = m_objects.begin();
         for (; it < m_objects.end(); it++)
         {
-            if (it->ID == obj.ID)
+            if (*it == obj)
             {
                 m_objects.erase(it);
                 break;
@@ -66,10 +66,10 @@ namespace SM
 
     void Scene::RemoveObjectByName(const std::string& name)
     {
-        std::vector<Object>::iterator it = m_objects.begin();
+        std::vector<Object*>::iterator it = m_objects.begin();
         for (; it < m_objects.end(); it++)
         {
-            if (it->GetName().compare(name) == 0)
+            if ((*it)->Name.compare(name) == 0)
             {
                 m_objects.erase(it);
                 break;
@@ -81,9 +81,9 @@ namespace SM
     {
         for (auto& obj : m_objects)
         {
-            if (obj.GetName().compare(name) == 0)
+            if (obj->Name.compare(name) == 0)
             {
-                return &obj;
+                return obj;
             }
         }
 
@@ -96,9 +96,9 @@ namespace SM
 
         for (auto& obj : m_objects)
         {
-            if (obj.GetTag().compare(tag) == 0)
+            if (obj->Tag.compare(tag) == 0)
             {
-                objs.push_back(&obj);
+                objs.push_back(obj);
             }
         }
         return objs;

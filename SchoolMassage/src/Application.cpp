@@ -67,4 +67,8 @@ namespace SM
         m_renderer.Terminate();
         m_inputEngine.Terminate();
     }
+    double Application::GetElapsedTime()
+    {
+        return glfwGetTime();
+    }
 } // namespace SM

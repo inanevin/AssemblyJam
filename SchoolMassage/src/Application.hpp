@@ -28,6 +28,8 @@ namespace SM
             return m_delta;
         }
 
+        double GetElapsedTime();
+
         static Application* _ptr;
 
     private:
