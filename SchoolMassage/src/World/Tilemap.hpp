@@ -30,13 +30,11 @@ namespace SM
 	class Tilemap
 	{
 	public:
-		void Start();
-		void Tick();
+		void Init();
+		void Uninit();
 		void Render();
-		void Unload();
 
-		void Generate();
-		void Randomize(); // fill with random tiles
+		void Randomize();
 
 		void SetTile(int col, int row, TileType type);
 		void SetTiles(int fromCol, int fromRow, int widthCols, int heightRows, TileType type);
@@ -44,12 +42,40 @@ namespace SM
 		Tile* GetTile(int col, int row);
 		int   GetIndex(int col, int row);
 
+		int GetWidth() { return m_cols; }
+		int GetHeight() { return m_rows; }
+
 	private:
 		TilemapRenderOptions m_renderOpts;
 
 		Tile* m_tiles = nullptr;
 		int m_cols = 64;
 		int m_rows = 64;
+	};
+
+	class TilemapWorld
+	{
+	public:
+		struct Room {
+			int startCol = 0;
+			int startRow = 0;
+			int widthCols = 0;
+			int heightRows = 0;
+		};
+
+		void Start();
+		void Tick();
+		void Render();
+		void Unload();
+
+		void Generate();
+
+		Tilemap& GetTilemap();
+
+	private:
+		Tilemap m_tilemap;
+
+		vector<Room> m_rooms;
 	};
 }
 

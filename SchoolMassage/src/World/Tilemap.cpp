@@ -5,15 +5,20 @@
 
 namespace SM
 {
-	void Tilemap::Start()
+	void Tilemap::Init()
 	{
 		m_tiles = new Tile[m_cols * m_rows];
 
 		Randomize();
 	}
-
-	void Tilemap::Tick()
+	void Tilemap::Uninit()
 	{
+		if (m_tiles) {
+			delete[] m_tiles;
+		}
+		m_tiles = nullptr;
+
+		LOG("Tilemap unloaded!");
 	}
 
 	void Tilemap::Render()
@@ -39,28 +44,6 @@ namespace SM
 			int screenY = m_renderOpts.tileHeightPx * row;
 			LinaVG::DrawRect(LinaVG::Vec2(screenX, screenY), LinaVG::Vec2(screenX + m_renderOpts.tileWidthPx, screenY + m_renderOpts.tileHeightPx), opts);
 		}
-	}
-
-	void Tilemap::Unload()
-	{
-		LOG("Tilemap unloaded!");
-
-		if (m_tiles) {
-			delete[] m_tiles;
-		}
-		m_tiles = nullptr;
-	}
-
-	void Tilemap::Generate()
-	{
-		SetTiles(0,0, m_cols-1,m_rows-1, TILE_WALL);
-
-		BSPTree* tree = new BSPTree;
-
-
-
-		delete tree;
-		tree = nullptr;
 	}
 
 	void Tilemap::Randomize()
@@ -99,5 +82,36 @@ namespace SM
 	int Tilemap::GetIndex(int col, int row)
 	{
 		return (row * m_cols) + col;
+	}
+}
+
+namespace SM
+{
+	void TilemapWorld::Start()
+	{
+		m_tilemap.Init();
+	}
+
+	void TilemapWorld::Tick()
+	{
+	}
+
+	void TilemapWorld::Render()
+	{
+		m_tilemap.Render();
+	}
+
+	void TilemapWorld::Unload()
+	{
+		m_tilemap.Uninit();
+	}
+
+	void TilemapWorld::Generate()
+	{
+		m_tilemap.SetTiles(0,0, m_tilemap.GetWidth()-1,m_tilemap.GetHeight(), TILE_WALL);
+
+		BSPTree* tree = new BSPTree;
+		delete tree;
+		tree = nullptr;
 	}
 }

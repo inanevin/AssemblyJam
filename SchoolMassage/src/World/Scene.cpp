@@ -8,7 +8,7 @@ namespace SM
 
     void Scene::Start()
     {
-        m_tilemap.Start();
+        m_tilemapWorld.Start();
 
         for (auto o : m_objects)
             o->Start();
@@ -16,7 +16,7 @@ namespace SM
 
     void Scene::Tick()
     {
-        m_tilemap.Tick();
+        m_tilemapWorld.Tick();
 
         for (auto o : m_objects)
             o->Tick();
@@ -24,7 +24,7 @@ namespace SM
 
     void Scene::Render()
     {
-        m_tilemap.Render();
+        m_tilemapWorld.Render();
 
         for (auto o : m_objects)
         {
@@ -53,7 +53,7 @@ namespace SM
         for (auto o : m_objects)
             o->Unload();
 
-        m_tilemap.Unload();
+        m_tilemapWorld.Unload();
         m_objects.clear();
     }
 

@@ -34,7 +34,7 @@ namespace SM
 
     protected:
         std::vector<Object*> m_objects;
-        Tilemap m_tilemap;
+        TilemapWorld m_tilemapWorld;
     };
 } // namespace SM
 #endif
