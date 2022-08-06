@@ -16,13 +16,15 @@ namespace SM
         GameManager()  = default;
         ~GameManager() = default;
 
-        void          OnStart();
-        void          OnTick();
-        void          OnRender();
-        void          OnEnd();
-        void          SwitchScene(Scene* toLoad);
-        void          OnKey(int key, int action);
-        void          OnMouse(int button, int action);
+        void OnStart();
+        void OnTick();
+        void OnRender();
+        void OnEnd();
+        void SwitchScene(Scene* toLoad);
+        void OnKey(int key, int action);
+        void OnMouse(int button, int action);
+        void OnWindowResized(int oldW, int oldH, int newW, int newH);
+
         inline Scene* GetCurrentScene()
         {
             return m_currentScene;

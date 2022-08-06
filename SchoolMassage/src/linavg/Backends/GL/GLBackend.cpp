@@ -230,7 +230,7 @@ namespace LinaVG::Backend
         glDisable(GL_CULL_FACE);
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_STENCIL_TEST);
-        glEnable(GL_SCISSOR_TEST);
+       // glEnable(GL_SCISSOR_TEST);
 
         if (Config.debugWireframeEnabled)
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

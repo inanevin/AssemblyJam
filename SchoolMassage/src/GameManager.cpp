@@ -60,4 +60,11 @@ namespace SM
         m_currentScene->OnMouse(button, action);
     }
 
+    void GameManager::OnWindowResized(int oldW, int oldH, int newW, int newH)
+    {
+        if (!m_currentScene)
+            return;
+        m_currentScene->OnWindowResized(oldW, oldH, newW, newH);
+    }
+
 } // namespace SM

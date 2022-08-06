@@ -12,7 +12,6 @@ namespace SM
 {
     Player* Player::_ptr = nullptr;
 
-    Vec2  playerTileSize     = Vec2(100, 100);
     int   walkAnimCounter    = 0;
     float walkAnimSwitchTime = 0.1f;
     float walkAnimLastSwitch = 0.0f;
@@ -40,6 +39,8 @@ namespace SM
         // Movement properties
         m_pos.x = g_config.windowWidth / 2.0f;
         m_pos.y = g_config.windowHeight / 2.0f;
+
+        m_size = Vec2(128, 128);
     }
 
     void Player::Tick()
@@ -56,27 +57,37 @@ namespace SM
 
         m_pos += input * delta * movementSpeed;
 
+        const Vec2 mousePos  = InputEngine::_ptr->GetMousePosition();
+        const Vec2 mousePerc = Vec2(mousePos.x / g_config.windowWidth, mousePos.y / g_config.windowHeight);
+        const Vec2 toMouse   = mousePerc - Vec2(0.5f, 0.5f);
+        float      angle     = AngleBetween(Vec2(0.0f, -1.0f), glm::normalize(toMouse));
+
+        if (angle < 0.0f)
+            angle = 360.0f + angle;
+
+        m_rotation = angle;
+
         Animate();
     }
 
     void Player::Render()
     {
         LinaVG::StyleOptions opts;
-        opts.color = LinaVG::Vec4(1,0,0,1);
+        opts.color = LinaVG::Vec4(1, 0, 0, 1);
 
-        LinaVG::DrawRect(Vec2(0,0), Vec2(100, 100), opts);
+        LinaVG::DrawRect(Vec2(0, 0), Vec2(100, 100), opts);
 
         opts.color = LinaVG::Vec4(1, 1, 0, 1);
         LinaVG::DrawRect(Vec2(g_config.windowWidth - 100, 0), Vec2(g_config.windowWidth, 100), opts);
 
-      opts.color = LinaVG::Vec4(1, 1, 1, 1);
-      LinaVG::DrawRect(Vec2(g_config.windowWidth - 100, g_config.windowHeight - 100), Vec2(g_config.windowWidth, g_config.windowHeight), opts);
-      
-      opts.color = LinaVG::Vec4(0, 1, 1, 1);
-      LinaVG::DrawRect(Vec2(0, g_config.windowHeight - 100), Vec2(100, g_config.windowHeight), opts);
-      
-      opts.textureHandle = m_currentTexture;
-      LinaVG::DrawImage(m_currentTexture, m_pos, playerTileSize);
+        opts.color = LinaVG::Vec4(1, 1, 1, 1);
+        LinaVG::DrawRect(Vec2(g_config.windowWidth - 100, g_config.windowHeight - 100), Vec2(g_config.windowWidth, g_config.windowHeight), opts);
+
+        opts.color = LinaVG::Vec4(0, 1, 1, 1);
+        LinaVG::DrawRect(Vec2(0, g_config.windowHeight - 100), Vec2(100, g_config.windowHeight), opts);
+
+        opts.textureHandle = m_currentTexture;
+        LinaVG::DrawImage(m_currentTexture, m_pos, m_size, m_rotation);
     }
 
     void Player::Unload()

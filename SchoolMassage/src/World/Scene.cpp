@@ -55,6 +55,12 @@ namespace SM
             o->OnMouse(button, action);
     }
 
+    void Scene::OnWindowResized(int oldW, int oldH, int newW, int newH)
+    {
+        for (auto o : m_objects)
+            o->OnWindowResized(oldW, oldH, newW, newH);
+    }
+
     void Scene::AddObject(Object* obj)
     {
         m_objects.push_back(obj);

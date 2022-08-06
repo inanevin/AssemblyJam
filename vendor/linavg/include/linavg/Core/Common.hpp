@@ -759,7 +759,7 @@ namespace LinaVG
         /// <summary>
         /// For debugging purposes, zooms the rendering ortho projection.
         /// </summary>
-        float debugOrthoProjectionZoom = 1.0f;
+        float debugOrthoProjectionZoom = 0.0f;
 
         /// <summary>
         /// For debugging purposes, offsets the rendering ortho projection.

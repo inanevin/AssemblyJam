@@ -24,6 +24,7 @@ namespace SM
         virtual void Unload();
         virtual void OnKey(int key, int action);
         virtual void OnMouse(int button, int action);
+        virtual void OnWindowResized(int oldW, int oldH, int newW, int newH);
 
         virtual void                 AddObject(Object* obj);
         virtual void                 RemoveObject(const Object* obj);

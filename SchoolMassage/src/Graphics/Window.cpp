@@ -33,17 +33,25 @@ namespace SM
         glfwWindowHint(GLFW_DECORATED, g_config.decoratedWindow);
         glfwWindowHint(GLFW_RESIZABLE, g_config.resizableWindow);
 
-        #ifdef SM_UNIX
+#ifdef SM_UNIX
         glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_FALSE);
         glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
-        #endif
+#endif
 
         auto*              primaryMonitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode           = glfwGetVideoMode(primaryMonitor);
+        const Vec2         modeSize       = Vec2(mode->width, mode->height);
+        const bool         fullScreen     = g_config.fullscreenWindow;
 
-        const bool fullScreen = false;
-        m_glfwWindow          = (glfwCreateWindow(w, h, g_config.windowTitle, fullScreen ? primaryMonitor : NULL, NULL));
-        float yScale          = 0.0f;
+        if (fullScreen)
+        {
+            g_config.windowWidth         = modeSize.x;
+            g_config.windowHeight        = modeSize.y;
+            LinaVG::Config.displayWidth  = modeSize.x;
+            LinaVG::Config.displayHeight = modeSize.y;
+        }
+        m_glfwWindow = (glfwCreateWindow(g_config.windowWidth, g_config.windowHeight, g_config.windowTitle, fullScreen ? primaryMonitor : NULL, NULL));
+        float yScale = 0.0f;
         glfwGetMonitorContentScale(primaryMonitor, &g_config.framebufferScale, &yScale);
 
         if (!m_glfwWindow)
@@ -77,7 +85,9 @@ namespace SM
 
         auto windowResizeFunc = [](GLFWwindow* w, int wi, int he) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
-            window->SetSize(Vec2i(wi, he));
+            GameManager::_ptr->OnWindowResized(g_config.windowWidth, g_config.windowHeight, wi, he);
+            g_config.windowHeight        = he;
+            g_config.windowWidth         = wi;
             LinaVG::Config.displayWidth  = wi;
             LinaVG::Config.displayHeight = he;
         };
