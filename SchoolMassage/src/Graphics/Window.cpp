@@ -1,13 +1,16 @@
 #include "Graphics/Window.hpp"
 #include "Common/Common.hpp"
 #include "Common/Utils.hpp"
+#include "GameManager.hpp"
+#include "Common/InputEngine.hpp"
+#include <linavg/LinaVG.hpp>
 
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 
 namespace SM
 {
-    Window* Window::s_instance = nullptr;
+    Window* Window::_ptr = 0;
 
     static void GLFWErrorCallback(int error, const char* desc)
     {
@@ -16,6 +19,7 @@ namespace SM
 
     bool Window::Initialize()
     {
+        _ptr        = this;
         const int w = g_config.windowWidth;
         const int h = g_config.windowHeight;
 
@@ -29,12 +33,25 @@ namespace SM
         glfwWindowHint(GLFW_DECORATED, g_config.decoratedWindow);
         glfwWindowHint(GLFW_RESIZABLE, g_config.resizableWindow);
 
+#ifdef SM_UNIX
+        glfwWindowHint(GLFW_COCOA_RETINA_FRAMEBUFFER, GLFW_FALSE);
+        glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
+#endif
+
         auto*              primaryMonitor = glfwGetPrimaryMonitor();
         const GLFWvidmode* mode           = glfwGetVideoMode(primaryMonitor);
+        const Vec2         modeSize       = Vec2(mode->width, mode->height);
+        const bool         fullScreen     = g_config.fullscreenWindow;
 
-        const bool fullScreen = false;
-        m_glfwWindow          = (glfwCreateWindow(w, h, g_config.windowTitle, fullScreen ? primaryMonitor : NULL, NULL));
-        float yScale          = 0.0f;
+        if (fullScreen)
+        {
+            g_config.windowWidth         = modeSize.x;
+            g_config.windowHeight        = modeSize.y;
+            LinaVG::Config.displayWidth  = modeSize.x;
+            LinaVG::Config.displayHeight = modeSize.y;
+        }
+        m_glfwWindow = (glfwCreateWindow(g_config.windowWidth, g_config.windowHeight, g_config.windowTitle, fullScreen ? primaryMonitor : NULL, NULL));
+        float yScale = 0.0f;
         glfwGetMonitorContentScale(primaryMonitor, &g_config.framebufferScale, &yScale);
 
         if (!m_glfwWindow)
@@ -68,7 +85,11 @@ namespace SM
 
         auto windowResizeFunc = [](GLFWwindow* w, int wi, int he) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
-            window->SetSize(Vec2i(wi, he));
+            GameManager::_ptr->OnWindowResized(g_config.windowWidth, g_config.windowHeight, wi, he);
+            g_config.windowHeight        = he;
+            g_config.windowWidth         = wi;
+            LinaVG::Config.displayWidth  = wi;
+            LinaVG::Config.displayHeight = he;
         };
 
         auto windowCloseFunc = [](GLFWwindow* w) {
@@ -78,14 +99,17 @@ namespace SM
 
         auto windowKeyFunc = [](GLFWwindow* w, int key, int scancode, int action, int modes) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
+            GameManager::_ptr->OnKey(key, action);
         };
 
         auto windowButtonFunc = [](GLFWwindow* w, int button, int action, int modes) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
+            GameManager::_ptr->OnMouse(button, action);
         };
 
         auto windowMouseScrollFunc = [](GLFWwindow* w, double xOff, double yOff) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
+            InputEngine::_ptr->OnScroll(xOff, yOff);
         };
 
         auto windowCursorPosFunc = [](GLFWwindow* w, double xPos, double yPos) {
@@ -104,6 +128,7 @@ namespace SM
         glfwSetScrollCallback(m_glfwWindow, windowMouseScrollFunc);
         glfwSetCursorPosCallback(m_glfwWindow, windowCursorPosFunc);
         glfwSetWindowFocusCallback(m_glfwWindow, windowFocusFunc);
+        InputEngine::_ptr->OnWindowContextCreated(m_userPtr);
 
         return true;
     }
@@ -118,7 +143,6 @@ namespace SM
     void Window::Update()
     {
         glfwSwapBuffers(m_glfwWindow);
-        glfwPollEvents();
     }
 
     void Window::SetSize(const Vec2i& size)

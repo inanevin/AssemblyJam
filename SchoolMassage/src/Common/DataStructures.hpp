@@ -4,6 +4,7 @@
 #ifndef DataStructures_HPP
 #define DataStructures_HPP
 
+#include "InputMapping.hpp"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -13,17 +14,10 @@ namespace SM
     typedef glm::vec2  Vec2;
     typedef glm::vec3  Vec3;
     typedef glm::vec4  Vec4;
-    typedef uint32_t   BackendHandle;
-    typedef uint32_t   Index;
+    typedef uint32_t   GraphicsHandle;
     using std::vector;
 
-    struct Vertex
-    {
-        Vec2 pos;
-        Vec2 uv;
-        Vec4 col;
-    };
-
+    #define DEG2RAD(X) X * 0.0174533f
 } // namespace SM
 
 #endif

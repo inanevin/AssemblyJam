@@ -25,32 +25,41 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
 /*
-Class: GLBackend
+Class: Backend
 
 
 
-Timestamp: 3/24/2022 11:33:52 PM
+Timestamp: 3/28/2022 2:55:16 PM
 */
 
 #pragma once
-#include "Common/DataStructures.hpp"
-#include <string>
-#include <unordered_map>
 
-#ifndef Backend_HPP
-#define Backend_HPP
+#ifndef LinaVGBackend_HPP
+#define LinaVGBackend_HPP
 
-namespace SM::Backend
+// Headers here.
+#include "Common.hpp"
+
+#define LINAVG_BACKEND_GL
+#ifdef LINAVG_BACKEND_GL
+#include "linavg/Backends/GL/GLBackend.hpp"
+#endif
+
+namespace LinaVG::Internal
 {
-
     class ShaderData
     {
     public:
-        BackendHandle                                  m_handle = 0;
-        std::unordered_map<std::string, BackendHandle> m_uniformMap;
+        BackendHandle                            m_handle = 0;
+        LINAVG_MAP<LINAVG_STRING, BackendHandle> m_uniformMap;
     };
 
+    /// <summary>
+    /// Rendering data for various backends. If you are implementing your own backend, you can use this, or choose to create your own structs.
+    /// This is only used within the backend.
+    /// </summary>
     struct BackendData
     {
         BackendHandle m_vbo = 0;
@@ -71,21 +80,8 @@ namespace SM::Backend
         bool          m_skipDraw                  = false;
     };
 
-    extern BackendData g_backendData;
+    extern LINAVG_API BackendData g_backendData;
 
-    bool Initialize();
-    void Terminate();
-    void StartFrame();
-    void Render();
-
-    void          EndFrame();
-    void          BufferFontTextureAtlas(int width, int height, int offsetX, int offsetY, unsigned char* data);
-    void          BindFontTexture(BackendHandle texture);
-    BackendHandle CreateFontTexture(int width, int height);
-
-    // Private functionality.
-    void AddShaderUniforms(ShaderData& data);
-    void CreateShader(ShaderData& data, const char* vert, const char* frag);
-} // namespace SM
+} // namespace LinaVG::Internal
 
 #endif
