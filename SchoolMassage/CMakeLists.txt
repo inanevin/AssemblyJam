@@ -58,6 +58,8 @@ src/World/Camera.hpp
 src/World/Camera.cpp
 src/World/Tilemap.hpp
 src/World/Tilemap.cpp
+src/World/Bullet.cpp
+src/World/Bullet.hpp
 
 )
 

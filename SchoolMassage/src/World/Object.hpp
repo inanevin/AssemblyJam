@@ -29,26 +29,15 @@ namespace SM
 
         virtual void Unload(){};
 
-        inline Vec2& GetPos()
-        {
-            return m_pos;
-        }
-
-        inline Vec2& GetSize()
-        {
-            return m_size;
-        }
-
-        uint32_t    ID          = 0;
-        std::string Name        = "";
-        std::string Tag         = "";
-        bool        IsVisible   = true;
-        bool        RenderDebug = false;
-
-    protected:
-        Vec2  m_pos      = Vec2(0, 0);
-        Vec2  m_size     = Vec2(128, 128);
-        float m_rotation = 0.0f;
+        uint32_t    m_id          = 0;
+        std::string m_name        = "";
+        std::string m_tag         = "";
+        bool        m_visible     = true;
+        bool        m_renderDebug = false;
+        Vec2        m_pos         = Vec2(0, 0);
+        Vec2        m_size        = Vec2(128, 128);
+        float       m_rotation    = 0.0f;
+        int         m_drawOrder   = 0;
     };
 } // namespace SM
 #endif

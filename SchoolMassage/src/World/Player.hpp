@@ -1,4 +1,5 @@
 
+
 #pragma once
 #include "Common/Common.hpp"
 #include "Object.hpp"
@@ -22,6 +23,8 @@ namespace SM
         virtual void Render() override;
         virtual void Unload() override;
 
+        void Fire();
+
         static Player* _ptr;
 
     private:
@@ -31,6 +34,7 @@ namespace SM
         GraphicsHandle m_currentTexture;
         GraphicsHandle m_idleTexture;
         GraphicsHandle m_walkTextures[2];
+        Vec2           m_dir = Vec2(0, 0);
     };
 } // namespace SM
 #endif

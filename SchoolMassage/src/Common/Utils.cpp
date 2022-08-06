@@ -42,10 +42,10 @@ namespace SM
 
     bool TestAABB(Object* obj1, Object* obj2)
     {
-        const Vec2 hs1 = obj1->GetSize() / 2.0f;
-        const Vec2 hs2 = obj2->GetSize() / 2.0f;
-        const Vec2 p1  = obj1->GetPos();
-        const Vec2 p2  = obj2->GetPos();
+        const Vec2 hs1 = obj1->m_size / 2.0f;
+        const Vec2 hs2 = obj2->m_size / 2.0f;
+        const Vec2 p1  = obj1->m_pos;
+        const Vec2 p2  = obj2->m_pos;
 
         if (std::fabs(p1.x - p2.x) > (hs1.x + hs2.x))
             return false;

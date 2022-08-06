@@ -5,7 +5,8 @@
 #include "Application.hpp"
 #include "Common/Utils.hpp"
 #include "glm/gtx/norm.hpp"
-
+#include "Bullet.hpp"
+#include "Scene.hpp"
 #include <linavg/LinaVG.hpp>
 
 namespace SM
@@ -40,8 +41,8 @@ namespace SM
         m_pos.x = g_config.windowWidth / 2.0f;
         m_pos.y = g_config.windowHeight / 2.0f;
 
-        m_size = Vec2(128, 128);
-        RenderDebug = true;
+        m_size        = Vec2(128, 128);
+        m_renderDebug = true;
     }
 
     void Player::Tick()
@@ -62,6 +63,7 @@ namespace SM
         const Vec2 mousePerc = Vec2(mousePos.x / g_config.windowWidth, mousePos.y / g_config.windowHeight);
         const Vec2 toMouse   = mousePerc - Vec2(0.5f, 0.5f);
         float      angle     = AngleBetween(Vec2(0.0f, -1.0f), glm::normalize(toMouse));
+        m_dir                = toMouse;
 
         if (angle < 0.0f)
             angle = 360.0f + angle;
@@ -69,6 +71,11 @@ namespace SM
         m_rotation = angle;
 
         Animate();
+
+        if (InputEngine::_ptr->GetMouseButtonDown(0))
+        {
+            Fire();
+        }
     }
 
     void Player::Render()
@@ -88,12 +95,23 @@ namespace SM
         LinaVG::DrawRect(Vec2(0, g_config.windowHeight - 100), Vec2(100, g_config.windowHeight), opts);
 
         opts.textureHandle = m_currentTexture;
-        LinaVG::DrawImage(m_currentTexture, m_pos, m_size, m_rotation);
+        m_drawOrder        = 10;
+        LinaVG::DrawImage(m_currentTexture, m_pos, m_size, m_rotation, m_drawOrder);
     }
 
     void Player::Unload()
     {
         _ptr = 0;
+    }
+
+    void Player::Fire()
+    {
+        Bullet* b = new Bullet();
+        b->m_pos  = m_pos;
+        b->SetDirection(m_dir);
+        b->SetSpeed(4500);
+        GameManager::_ptr->GetCurrentScene()->AddObject(b);
+
     }
 
     void Player::Animate()

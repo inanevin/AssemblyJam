@@ -18,6 +18,7 @@ namespace SM
 
         virtual void Start() override;
         virtual void Tick() override;
+        virtual void Render() override;
 
     private:
         Camera m_cam;

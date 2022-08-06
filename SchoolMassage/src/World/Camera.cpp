@@ -22,7 +22,7 @@ namespace SM
     {
         if (Player::_ptr != 0)
         {
-            const Vec2  pPos  = Player::_ptr->GetPos();
+            const Vec2  pPos  = Player::_ptr->m_pos;
             const float delta = Application::_ptr->GetDelta();
             Pos.x             = Lerp(Pos.x, pPos.x, delta * 5);
             Pos.y             = Lerp(Pos.y, pPos.y, delta * 5);

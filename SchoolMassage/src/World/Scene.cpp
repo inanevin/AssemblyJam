@@ -8,7 +8,7 @@ namespace SM
 
     void Scene::Start()
     {
-        m_tilemapWorld.Start();
+      //  m_tilemapWorld.Start();
 
         for (auto o : m_objects)
             o->Start();
@@ -24,22 +24,22 @@ namespace SM
 
     void Scene::Render()
     {
-        m_tilemapWorld.Render();
+        // m_tilemapWorld.Render();
 
         for (auto o : m_objects)
         {
-            if (o->IsVisible)
+            if (o->m_visible)
             {
                 o->Render();
 
-                if (o->RenderDebug)
+                if (o->m_renderDebug)
                 {
                     LinaVG::StyleOptions opts;
                     opts.isFilled  = false;
                     opts.thickness = 1.5f;
                     opts.color = LinaVG::Vec4(1,0,0,1);
-                    const Vec2 tl  = o->GetPos() - o->GetSize() / 2.0f;
-                    const Vec2 br  = o->GetPos() + o->GetSize() / 2.0f;
+                    const Vec2 tl  = o->m_pos - o->m_size / 2.0f;
+                    const Vec2 br  = o->m_pos + o->m_size / 2.0f;
                     LinaVG::DrawRect(tl, br, opts);
                 }
             }
@@ -78,7 +78,7 @@ namespace SM
     void Scene::AddObject(Object* obj)
     {
         m_objects.push_back(obj);
-        obj->ID = OBJ_ID_COUNTER++;
+        obj->m_id = OBJ_ID_COUNTER++;
     }
 
     void Scene::RemoveObject(const Object* obj)
@@ -99,7 +99,7 @@ namespace SM
         std::vector<Object*>::iterator it = m_objects.begin();
         for (; it < m_objects.end(); it++)
         {
-            if ((*it)->Name.compare(name) == 0)
+            if ((*it)->m_name.compare(name) == 0)
             {
                 m_objects.erase(it);
                 break;
@@ -111,7 +111,7 @@ namespace SM
     {
         for (auto& obj : m_objects)
         {
-            if (obj->Name.compare(name) == 0)
+            if (obj->m_name.compare(name) == 0)
             {
                 return obj;
             }
@@ -126,7 +126,7 @@ namespace SM
 
         for (auto& obj : m_objects)
         {
-            if (obj->Tag.compare(tag) == 0)
+            if (obj->m_tag.compare(tag) == 0)
             {
                 objs.push_back(obj);
             }
