@@ -234,7 +234,9 @@ namespace LinaVG::Backend
         else
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+        #ifdef SM_WIN
         glViewport(0, 0, (GLsizei)Config.displayWidth, (GLsizei)Config.displayHeight);
+        #endif
 
         // Ortho projection matrix.
         int fb_width  = (int)(Config.displayWidth * Config.framebufferScale.x);
