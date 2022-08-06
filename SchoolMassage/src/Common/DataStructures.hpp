@@ -17,6 +17,7 @@ namespace SM
     typedef uint32_t   GraphicsHandle;
     using std::vector;
 
+    #define DEG2RAD(X) X * 0.0174533f
 } // namespace SM
 
 #endif

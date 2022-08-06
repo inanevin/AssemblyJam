@@ -257,18 +257,13 @@ namespace LinaVG::Backend
         float       R    = static_cast<float>(Config.displayWidth + Config.displayWidth * zoom);
         float       T    = static_cast<float>(-zoom * Config.displayHeight);
         float       B    = static_cast<float>(0 + Config.displayHeight + Config.displayHeight * zoom);
-        
-
-       //L *= zoom;
-       //R *= zoom;
-       //T *= zoom;
-       //B *= zoom;
 
         L += Config.debugOrthoOffset.x;
         R += Config.debugOrthoOffset.x;
         T += Config.debugOrthoOffset.y;
         B += Config.debugOrthoOffset.y;
        //auto orth = glm::ortho(L, R, B, T, 0.0f, 10.0f);
+       //orth      = glm::rotate(orth, LVG_DEG2RAD * Config.debugRotateDegrees, glm::vec3(0, 0, 1));
        //
        //Internal::g_backendData.m_proj[0][0] = orth[0][0];
        //Internal::g_backendData.m_proj[0][1] = orth[0][1];
@@ -289,26 +284,26 @@ namespace LinaVG::Backend
        //Internal::g_backendData.m_proj[3][1] = orth[3][1];
        //Internal::g_backendData.m_proj[3][2] = orth[3][2];
        //Internal::g_backendData.m_proj[3][3] = orth[3][3];
-       
-       Internal::g_backendData.m_proj[0][0] = 2.0f / (R - L);
-       Internal::g_backendData.m_proj[0][1] = 0.0f;
-       Internal::g_backendData.m_proj[0][2] = 0.0f;
-       Internal::g_backendData.m_proj[0][3] = 0.0f;
-       
-       Internal::g_backendData.m_proj[1][0] = 0.0f;
-       Internal::g_backendData.m_proj[1][1] = 2.0f / (T - B);
-       Internal::g_backendData.m_proj[1][2] = 0.0f;
-       Internal::g_backendData.m_proj[1][3] = 0.0f;
-       
-       Internal::g_backendData.m_proj[2][0] = 0.0f;
-       Internal::g_backendData.m_proj[2][1] = 0.0f;
-       Internal::g_backendData.m_proj[2][2] = -1.0f;
-       Internal::g_backendData.m_proj[2][3] = 0.0f;
-       
-       Internal::g_backendData.m_proj[3][0] = (R + L) / (L - R);
-       Internal::g_backendData.m_proj[3][1] = (T + B) / (B - T);
-       Internal::g_backendData.m_proj[3][2] = 0.0f;
-       Internal::g_backendData.m_proj[3][3] = 1.0f;
+
+        Internal::g_backendData.m_proj[0][0] = 2.0f / (R - L);
+        Internal::g_backendData.m_proj[0][1] = 0.0f;
+        Internal::g_backendData.m_proj[0][2] = 0.0f;
+        Internal::g_backendData.m_proj[0][3] = 0.0f;
+        
+        Internal::g_backendData.m_proj[1][0] = 0.0f;
+        Internal::g_backendData.m_proj[1][1] = 2.0f / (T - B);
+        Internal::g_backendData.m_proj[1][2] = 0.0f;
+        Internal::g_backendData.m_proj[1][3] = 0.0f;
+        
+        Internal::g_backendData.m_proj[2][0] = 0.0f;
+        Internal::g_backendData.m_proj[2][1] = 0.0f;
+        Internal::g_backendData.m_proj[2][2] = -1.0f;
+        Internal::g_backendData.m_proj[2][3] = 0.0f;
+        
+        Internal::g_backendData.m_proj[3][0] = (R + L) / (L - R);
+        Internal::g_backendData.m_proj[3][1] = (T + B) / (B - T);
+        Internal::g_backendData.m_proj[3][2] = 0.0f;
+        Internal::g_backendData.m_proj[3][3] = 1.0f;
 
         glBindVertexArray(Internal::g_backendData.m_vao);
     }

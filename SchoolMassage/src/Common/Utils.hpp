@@ -22,6 +22,23 @@ namespace SM
         return (T)(val1 * ((U)(1) - amt) + val2 * amt);
     }
 
+    static int32_t Rand()
+    {
+        return ::rand();
+    }
+    static void SeedRand(int32_t seed)
+    {
+        srand((uint32_t)seed);
+    }
+    static float RandF()
+    {
+        return ::rand() / (float)RAND_MAX;
+    }
+    static float RandF(float Min, float Max)
+    {
+        return Lerp(Min, Max, RandF());
+    }
+
     bool IsWithinScreenBorder(const Vec2& pos, const Vec2& size);
 
 } // namespace SM

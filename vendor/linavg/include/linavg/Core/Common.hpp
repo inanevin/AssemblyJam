@@ -53,7 +53,7 @@ Timestamp: 3/26/2022 10:36:46 AM
 namespace LinaVG
 {
 
-#define LINAVG_STRING std::string
+#define LINAVG_STRING  std::string
 #define LINAVG_MAP     std::unordered_map
 #define LINAVG_MEMCPY  std::memcpy
 #define LINAVG_MEMMOVE std::memmove
@@ -91,7 +91,7 @@ namespace LinaVG
             z = v.z;
             w = v.w;
         }
-        
+
         float x = 0.0f;
         float y = 0.0f;
         float z = 0.0f;
@@ -136,7 +136,6 @@ namespace LinaVG
             x = v.x;
             y = v.y;
         }
-
 
         float x = 0.0f;
         float y = 0.0f;
@@ -766,6 +765,8 @@ namespace LinaVG
         /// For debugging purposes, offsets the rendering ortho projection.
         /// </summary>
         Vec2 debugOrthoOffset = Vec2(0.0f, 0.0f);
+
+        float debugRotateDegrees = 0.0f;
     };
 
     /// <summary>
