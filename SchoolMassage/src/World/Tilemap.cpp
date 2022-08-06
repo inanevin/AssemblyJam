@@ -1,7 +1,6 @@
 #include "World/Tilemap.hpp"
 #include "Common/Utils.hpp"
 #include "Common/BSPTree.hpp"
-#include "linavg/LinaVG.hpp"
 
 namespace SM
 {
@@ -39,6 +38,8 @@ namespace SM
 				case TILE_FLOOR: { opts.color = LinaVG::Vec4(0.9,0.9,0.9,1); } break;
 				default:         { opts.color = LinaVG::Vec4(0,0,0,0); } break;
 			}
+
+			opts.color = tile->DEBUG_color; // TEMP bsp debug
 
 			int screenX = m_renderOpts.tileWidthPx * col;
 			int screenY = m_renderOpts.tileHeightPx * row;
@@ -90,6 +91,8 @@ namespace SM
 	void TilemapWorld::Start()
 	{
 		m_tilemap.Init();
+
+		Generate();
 	}
 
 	void TilemapWorld::Tick()
@@ -113,6 +116,19 @@ namespace SM
 		BSPTree* tree = new BSPTree(m_tilemap.GetWidth(), m_tilemap.GetHeight());
 
 		tree->GetRoot()->SplitVertically();
+
+		struct {
+			void operator()(Tilemap* tilemap, BSPTree::Node* node, LinaVG::Vec4 debugColor)
+			{
+				for (int row=node->m_startRow; row < node->m_startRow + node->m_height; row++)
+				for (int col=node->m_startCol; col < node->m_startCol + node->m_width; col++)
+					tilemap->GetTile(col,row)->DEBUG_color = debugColor;
+
+				if (node->m_childLeft)  (*this)(tilemap, node->m_childLeft,  { debugColor.x + 0.1f, debugColor.y, debugColor.z, 1.0f });
+				if (node->m_childRight) (*this)(tilemap, node->m_childRight, { debugColor.x, debugColor.y, debugColor.z + 0.1f, 1.0f });
+			}
+		} recurseBSPTree;
+		recurseBSPTree(&m_tilemap, tree->GetRoot(), { 0,0,0,1 });
 
 		delete tree;
 		tree = nullptr;

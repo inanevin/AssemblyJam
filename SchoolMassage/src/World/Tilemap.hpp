@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/DataStructures.hpp"
+#include "linavg/LinaVG.hpp"
 
 #ifndef Tilemap_HPP
 #define Tilemap_HPP
@@ -19,6 +20,8 @@ namespace SM
 	{
 		TileType type = TILE_NONE;
 		bool isSolid = false;
+
+		LinaVG::Vec4 DEBUG_color;
 	};
 
 	struct TilemapRenderOptions
