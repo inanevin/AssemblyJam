@@ -122,7 +122,9 @@ namespace SM
 
 		BSPTree* tree = new BSPTree(m_tilemap.GetWidth(), m_tilemap.GetHeight());
 
-		struct {
+		// PLACE ROOMS
+		struct
+		{
 			void operator()(TilemapWorld* world, Tilemap* tilemap, BSPTree::Node* node, LinaVG::Vec4 debugColor, int depth)
 			{
 				const int MAX_DEPTH = 4;
@@ -149,7 +151,7 @@ namespace SM
 						room->width    = GetRandom(4, node->m_width  - padding);
 						room->height   = GetRandom(4, node->m_height - padding);
 
-						LOG("ROOM at (%d,%d) size (%d,%d)", room->startCol, room->startRow, room->width, room->height);
+						//LOG("ROOM at (%d,%d) size (%d,%d)", room->startCol, room->startRow, room->width, room->height);
 
 						tilemap->SetTiles(room->startCol, room->startRow, room->width, room->height, TILE_FLOOR);
 						//for (int row=room->startRow; row < room->startRow + room->height; row++)
@@ -167,6 +169,9 @@ namespace SM
 			}
 		} recurseBSPTree;
 		recurseBSPTree(this, &m_tilemap, tree->GetRoot(), { 0,0,0,1 }, 0);
+
+		// PLACE CORRIDORS
+		// todo(nicolas): connect bsp leafs
 
 		delete tree;
 		tree = nullptr;

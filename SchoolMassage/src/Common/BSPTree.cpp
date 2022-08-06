@@ -49,9 +49,7 @@ namespace SM
 		m_childRight->m_startRow   = m_startRow;
 		m_childRight->m_height     = m_height;
 
-		//LOG("V SPLIT left [at (%d,%d), size(%d,%d)] / right [at (%d,%d), size(%d,%d)]",
-		//	m_childLeft->m_startCol, m_childLeft->m_startRow, m_childLeft->m_width, m_childLeft->m_height,
-		//	m_childRight->m_startCol, m_childRight->m_startRow, m_childRight->m_width, m_childRight->m_height);
+		//LOG("V SPLIT left [at (%d,%d), size(%d,%d)] / right [at (%d,%d), size(%d,%d)]", m_childLeft->m_startCol, m_childLeft->m_startRow, m_childLeft->m_width, m_childLeft->m_height, m_childRight->m_startCol, m_childRight->m_startRow, m_childRight->m_width, m_childRight->m_height);
 	}
 
 	void BSPTree::Node::SplitHorizontally()
@@ -69,8 +67,6 @@ namespace SM
 		m_childRight->m_startCol  = m_startCol;
 		m_childRight->m_width     = m_width;
 
-		//LOG("H SPLIT left [at (%d,%d), size(%d,%d)] / right [at (%d,%d), size(%d,%d)]",
-		//	m_childLeft->m_startCol, m_childLeft->m_startRow, m_childLeft->m_width, m_childLeft->m_height,
-		//	m_childRight->m_startCol, m_childRight->m_startRow, m_childRight->m_width, m_childRight->m_height);
+		//LOG("H SPLIT left [at (%d,%d), size(%d,%d)] / right [at (%d,%d), size(%d,%d)]", m_childLeft->m_startCol, m_childLeft->m_startRow, m_childLeft->m_width, m_childLeft->m_height, m_childRight->m_startCol, m_childRight->m_startRow, m_childRight->m_width, m_childRight->m_height);
 	}
 }
