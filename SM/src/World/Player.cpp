@@ -74,7 +74,7 @@ namespace SM
 
         if (InputEngine::_ptr->GetMouseButtonDown(0))
         {
-            Fire();
+            // Fire();
         }
     }
 
