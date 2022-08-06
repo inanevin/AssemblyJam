@@ -1,35 +1,20 @@
-#include <iostream>
-#include "Common/Utils.hpp"
+#include "Application.hpp"
 #include "Common/Common.hpp"
-#include "Graphics/Window.hpp"
-#include "Graphics/GameRenderer.hpp"
 
 int main(int argc, char** argv)
 {
     using namespace SM;
 
-    Window w;
+    g_config.decoratedWindow = true;
+    g_config.resizableWindow = true;
+    g_config.fullscreenWindow = false;
+    g_config.windowWidth = 1440;
+    g_config.windowHeight = 960;
+    g_config.windowTitle = "School Massage";
+    g_config.msaaSamples = 0;
 
-    if (!w.Initialize())
-    {
-        LOG("Window init failure :(");
-
-        return 1;
-    }
-
-    auto v = ReadFile("Resources/map.txt");
-    LOG("DEBUG map text file size: %u", v.size());
-
-    GameRenderer renderer;
-    renderer.Initialize();
-
-    while (true)
-    {
-        w.Update();
-        renderer.Render();
-    }
-
-    renderer.Terminate();
-
+    Application app;
+    app.Run();
+    
     return 0;
 }

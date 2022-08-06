@@ -11,6 +11,8 @@ set(SCHOOLMASSAGE_SOURCES
 
 # Core
 src/Main.cpp
+src/Application.cpp
+src/Application.hpp
 src/glad/glad.c
 src/stb/stb_image.h
 

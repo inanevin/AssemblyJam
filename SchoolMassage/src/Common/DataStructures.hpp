@@ -9,12 +9,12 @@
 
 namespace SM
 {
-    typedef glm::ivec2 Vector2i;
-    typedef glm::vec2  Vector2;
-    typedef glm::vec3  Vector3;
-    typedef glm::vec4  Vector4;
-    using std::vector;
+    typedef glm::ivec2 Vec2i;
+    typedef glm::vec2  Vec2;
+    typedef glm::vec3  Vec3;
+    typedef glm::vec4  Vec4;
     typedef uint32_t   GraphicsHandle;
+    using std::vector;
 
 } // namespace SM
 

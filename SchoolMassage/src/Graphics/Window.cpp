@@ -69,7 +69,7 @@ namespace SM
 
         auto windowResizeFunc = [](GLFWwindow* w, int wi, int he) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
-            window->SetSize(Vector2i(wi, he));
+            window->SetSize(Vec2i(wi, he));
             LinaVG::Config.displayWidth = wi;
             LinaVG::Config.displayHeight = he;
         };
@@ -124,22 +124,22 @@ namespace SM
         glfwPollEvents();
     }
 
-    void Window::SetSize(const Vector2i& size)
+    void Window::SetSize(const Vec2i& size)
     {
         glfwSetWindowSize(m_glfwWindow, size.x, size.y);
         m_size = size;
     }
 
-    void Window::SetPos(const Vector2i& pos)
+    void Window::SetPos(const Vec2i& pos)
     {
         glfwSetWindowPos(m_glfwWindow, pos.x, pos.y);
         m_pos = pos;
     }
 
-    void Window::SetPosCentered(const Vector2i& newPos)
+    void Window::SetPosCentered(const Vec2i& newPos)
     {
         const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        SetPos(Vector2i((int)((float)mode->width / 2.0f + (float)newPos.x), (int)((float)mode->height / 2.0f + (float)newPos.y)));
+        SetPos(Vec2i((int)((float)mode->width / 2.0f + (float)newPos.x), (int)((float)mode->height / 2.0f + (float)newPos.y)));
     }
 
     void Window::Close()
