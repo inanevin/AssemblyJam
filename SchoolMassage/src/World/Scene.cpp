@@ -1,5 +1,6 @@
 #include "Scene.hpp"
 #include "Common/Utils.hpp"
+#include "linavg/LinaVG.hpp"
 
 namespace SM
 {
@@ -28,7 +29,20 @@ namespace SM
         for (auto o : m_objects)
         {
             if (o->IsVisible)
+            {
                 o->Render();
+
+                if (o->RenderDebug)
+                {
+                    LinaVG::StyleOptions opts;
+                    opts.isFilled  = false;
+                    opts.thickness = 1.5f;
+                    opts.color = LinaVG::Vec4(1,0,0,1);
+                    const Vec2 tl  = o->GetPos() - o->GetSize() / 2.0f;
+                    const Vec2 br  = o->GetPos() + o->GetSize() / 2.0f;
+                    LinaVG::DrawRect(tl, br, opts);
+                }
+            }
         }
     }
 

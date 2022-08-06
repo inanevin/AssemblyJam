@@ -16,9 +16,10 @@ namespace SM
 
         virtual void Start(){};
         virtual void Tick(){};
-        virtual void Render(){};
         virtual void OnKey(int key, int action){};
         virtual void OnMouse(int button, int action){};
+        virtual void Render(){};
+
         virtual void OnWindowResized(int oldW, int oldH, int newW, int newH)
         {
             const Vec2 perc = Vec2(m_pos.x / oldW, m_pos.y / oldH);
@@ -38,13 +39,13 @@ namespace SM
             return m_size;
         }
 
-        uint32_t    ID        = 0;
-        std::string Name      = "";
-        std::string Tag       = "";
-        bool        IsVisible = true;
+        uint32_t    ID          = 0;
+        std::string Name        = "";
+        std::string Tag         = "";
+        bool        IsVisible   = true;
+        bool        RenderDebug = false;
 
     protected:
-
         Vec2  m_pos      = Vec2(0, 0);
         Vec2  m_size     = Vec2(128, 128);
         float m_rotation = 0.0f;

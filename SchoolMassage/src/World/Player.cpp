@@ -41,6 +41,7 @@ namespace SM
         m_pos.y = g_config.windowHeight / 2.0f;
 
         m_size = Vec2(128, 128);
+        RenderDebug = true;
     }
 
     void Player::Tick()

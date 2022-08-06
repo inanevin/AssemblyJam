@@ -53,11 +53,6 @@ namespace SM
 
     bool IsWithinScreenBorder(const Vec2& pos, const Vec2& size);
 
-    double Abs(double a)
-    {
-        return std::fabs(a);
-    }
-
     bool TestAABB(Object* obj1, Object* obj2);
 
 } // namespace SM

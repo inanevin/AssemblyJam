@@ -46,9 +46,9 @@ namespace SM
         const Vec2 p1  = obj1->GetPos();
         const Vec2 p2  = obj2->GetPos();
 
-        if (Abs(p1.x - p2.x) > (hs1.x + hs2.x))
+        if (std::fabs(p1.x - p2.x) > (hs1.x + hs2.x))
             return false;
-        if (Abs(p1.y - p2.y) > (hs1.y + hs2.y))
+        if (std::fabs(p1.y - p2.y) > (hs1.y + hs2.y))
             return false;
 
         // We have an overlap
