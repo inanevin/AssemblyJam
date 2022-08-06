@@ -39,17 +39,13 @@ namespace SM
             return m_pos;
         }
 
-        static Window* Get()
-        {
-            return s_instance;
-        }
+        static Window* _ptr;
 
     private:
-        Vec2i       m_size = Vec2i(0, 0);
-        Vec2i       m_pos  = Vec2i(0, 0);
-        static Window* s_instance;
-        GLFWwindow*    m_glfwWindow = nullptr;
-        void*          m_userPtr    = nullptr;
+        Vec2i       m_size       = Vec2i(0, 0);
+        Vec2i       m_pos        = Vec2i(0, 0);
+        GLFWwindow* m_glfwWindow = nullptr;
+        void*       m_userPtr    = nullptr;
     };
 } // namespace SM
 

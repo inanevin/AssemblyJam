@@ -1,18 +1,19 @@
 #include "Application.hpp"
 #include "Common/Utils.hpp"
 #include "Common/Common.hpp"
-#include "Graphics/Window.hpp"
-#include "Graphics/GameRenderer.hpp"
+
 #include <GLFW/glfw3.h>
 #include <iostream>
 
 namespace SM
 {
+    Application* Application::_ptr = 0;
+
     void Application::Run()
     {
-        Window w;
+        _ptr = this;
 
-        if (!w.Initialize())
+        if (!m_window.Initialize())
         {
             LOG("Window init failure :(");
             return;
@@ -21,18 +22,18 @@ namespace SM
         auto v = ReadFile("Resources/map.txt");
         LOG("DEBUG map text file size: %u", v.size());
 
-        GameRenderer renderer;
-        renderer.Initialize();
+        m_renderer.Initialize();
 
-        double lastTime = glfwGetTime();
+        double lastTime    = glfwGetTime();
         double lastFPSTime = lastTime;
         int    totalFrames = 0;
 
+        m_gameManager.OnStart();
         while (true)
         {
             const double time = glfwGetTime();
-            const double delta = lastTime - time;
-            lastTime = time;
+            m_delta           = lastTime - time;
+            lastTime          = time;
 
             if (time - lastFPSTime >= 1.0f)
             {
@@ -40,11 +41,20 @@ namespace SM
                 totalFrames = 0;
             }
 
-            w.Update();
-            renderer.Render();
+            // Swap & poll
+            m_window.Update();
+
+            // Update game
+            m_gameManager.OnTick();
+
+            // Clear renderer & call game render.
+            m_renderer.Clear();
+            m_gameManager.OnRender();
+
             totalFrames++;
         }
 
-        renderer.Terminate();
+        m_gameManager.OnEnd();
+        m_renderer.Terminate();
     }
-}
+} // namespace SM

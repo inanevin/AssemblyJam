@@ -4,15 +4,20 @@
 #include "linavg/LinaVG.hpp"
 #include <glad/glad.h>
 
+#include "World/Scene.hpp"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
 namespace SM
 {
     GraphicsHandle testTexture;
+    GameRenderer*  GameRenderer::_ptr = 0;
 
     void GameRenderer::Initialize()
     {
+        _ptr = this;
+
         // Lina VG config shaiba.
         LinaVG::Config.displayPosX   = 0;
         LinaVG::Config.displayPosY   = 0;
@@ -38,31 +43,13 @@ namespace SM
         // Loading textures
         testTexture = CreateTexture("Resources/test.png");
     }
-
-    void GameRenderer::Render()
+    
+    void GameRenderer::Clear()
     {
         // Clear
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClearColor((GLfloat)0.8f, (GLfloat)0.8f, (GLfloat)0.8f, (GLfloat)1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        // Preferably build a mini scene tree, render objects in a loop
-        // objects will implement which LinaVG functionality etc. idk shit
-        LinaVG::StartFrame();
-
-        // Example Rect
-        LinaVG::StyleOptions style;
-        style.color = LinaVG::Vec4(1, 0, 0, 1);
-        LinaVG::DrawRect(LinaVG::Vec2(0, 0), LinaVG::Vec2(100, 100), style);
-
-        // Example Texture
-        style.textureHandle   = testTexture;
-        style.textureUVOffset = LinaVG::Vec2(0.0f, 0.0f);
-        style.textureUVTiling = LinaVG::Vec2(2.0f, 2.0f);
-        LinaVG::DrawRect(LinaVG::Vec2(150, 150), LinaVG::Vec2(512, 512), style);
-
-        LinaVG::Render();
-        LinaVG::EndFrame();
     }
 
     void GameRenderer::Terminate()

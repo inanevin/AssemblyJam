@@ -8,6 +8,8 @@
 
 namespace SM
 {
+    class Scene;
+
     class GameRenderer
     {
     public:
@@ -15,7 +17,7 @@ namespace SM
         ~GameRenderer() = default;
 
         void Initialize();
-        void Render();
+        void Clear();
         void Terminate();
 
         /// <summary>
@@ -27,6 +29,8 @@ namespace SM
         /// <param name="nrChannels"></param>
         /// <returns></returns>
         GraphicsHandle CreateTexture(const char* file, int* w = 0, int* h = 0, int* nrChn = 0);
+
+        static GameRenderer* _ptr;
 
     private:
     };

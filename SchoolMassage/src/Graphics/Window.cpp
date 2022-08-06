@@ -8,7 +8,7 @@
 
 namespace SM
 {
-    Window* Window::s_instance = nullptr;
+    Window* Window::_ptr = 0;
 
     static void GLFWErrorCallback(int error, const char* desc)
     {
@@ -17,6 +17,7 @@ namespace SM
 
     bool Window::Initialize()
     {
+        _ptr        = this;
         const int w = g_config.windowWidth;
         const int h = g_config.windowHeight;
 
@@ -70,7 +71,7 @@ namespace SM
         auto windowResizeFunc = [](GLFWwindow* w, int wi, int he) {
             auto* window = static_cast<Window*>(glfwGetWindowUserPointer(w));
             window->SetSize(Vec2i(wi, he));
-            LinaVG::Config.displayWidth = wi;
+            LinaVG::Config.displayWidth  = wi;
             LinaVG::Config.displayHeight = he;
         };
 

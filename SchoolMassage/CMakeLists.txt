@@ -15,6 +15,8 @@ src/Application.cpp
 src/Application.hpp
 src/glad/glad.c
 src/stb/stb_image.h
+src/GameManager.hpp
+src/GameManager.cpp
 
 # Graphics
 src/Graphics/Window.hpp
@@ -38,6 +40,11 @@ src/linavg/Core/Math.cpp
 src/linavg/Core/Renderer.cpp
 src/linavg/Core/Text.cpp
 src/linavg/Utility/Utility.cpp
+
+# Word
+src/World/Object.hpp
+src/World/Scene.hpp
+src/World/Scene.cpp
 
 )
 
