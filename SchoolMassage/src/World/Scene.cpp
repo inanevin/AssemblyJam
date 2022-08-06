@@ -24,7 +24,7 @@ namespace SM
 
     void Scene::Render()
     {
-        //m_tilemapWorld.Render();
+        m_tilemapWorld.Render();
 
         for (auto o : m_objects)
         {
