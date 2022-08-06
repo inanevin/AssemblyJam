@@ -46,6 +46,7 @@ Timestamp: 3/26/2022 10:36:46 AM
 #include <type_traits>
 #include <unordered_map>
 #include <string>
+#include <glm/glm.hpp>
 
 #define _ASSERT
 
@@ -83,6 +84,14 @@ namespace LinaVG
             this->w = v.w;
         }
 
+        Vec4(const glm::vec4& v)
+        {
+            x = v.x;
+            y = v.y;
+            z = v.z;
+            w = v.w;
+        }
+        
         float x = 0.0f;
         float y = 0.0f;
         float z = 0.0f;
@@ -122,6 +131,12 @@ namespace LinaVG
             x = v.x;
             y = v.y;
         }
+        Vec2(const glm::vec2& v)
+        {
+            x = v.x;
+            y = v.y;
+        }
+
 
         float x = 0.0f;
         float y = 0.0f;

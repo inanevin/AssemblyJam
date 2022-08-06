@@ -48,6 +48,10 @@ src/linavg/Utility/Utility.cpp
 src/World/Object.hpp
 src/World/Scene.hpp
 src/World/Scene.cpp
+src/World/MainScene.hpp
+src/World/MainScene.cpp
+src/World/Player.hpp
+src/World/Player.cpp
 
 )
 
