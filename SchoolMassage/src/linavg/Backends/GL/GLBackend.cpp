@@ -247,11 +247,11 @@ namespace LinaVG::Backend
 
         Internal::g_backendData.m_skipDraw = false;
 
-        float       L    = static_cast<float>(Config.displayPosX);
-        float       R    = static_cast<float>(Config.displayPosX + Config.displayWidth);
-        float       T    = static_cast<float>(Config.displayPosY);
-        float       B    = static_cast<float>(Config.displayPosY + Config.displayHeight);
-        const float zoom = Config.debugOrthoProjectionZoom;
+        float       L    = static_cast<float>(0);
+        float       R    = static_cast<float>(0 + Config.displayWidth);
+        float       T    = static_cast<float>(0);
+        float       B    = static_cast<float>(0 + Config.displayHeight);
+        const float zoom = 1.0f;
 
         L *= zoom;
         R *= zoom;
