@@ -12,6 +12,7 @@ namespace SM
         AddObject(&player);
 
         Scene::Start();
+        srand(0);
     }
 
     void MainScene::Tick()
