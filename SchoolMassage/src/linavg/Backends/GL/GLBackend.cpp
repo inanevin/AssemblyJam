@@ -438,6 +438,7 @@ namespace LinaVG::Backend
 
     void SetScissors(BackendHandle x, BackendHandle y, BackendHandle width, BackendHandle height)
     {
+        return;
         if (width == 0 || height == 0)
         {
             x      = static_cast<BackendHandle>(Config.displayPosX);

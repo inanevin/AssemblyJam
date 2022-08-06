@@ -33,8 +33,9 @@ namespace SM
         LinaVG::StyleOptions opts;
         opts.isFilled = true;
         opts.color = LinaVG::Vec4(1,0,0,1);
-
-        LinaVG::DrawRect(LinaVG::Vec2(0,0), LinaVG::Vec2(200, 200), opts);
+        static float wtf = 0.0f;
+        wtf += 1.0f;
+        LinaVG::DrawRect(LinaVG::Vec2(0,wtf), LinaVG::Vec2(200, 200), opts);
         LinaVG::Render();
         LinaVG::EndFrame();
 
