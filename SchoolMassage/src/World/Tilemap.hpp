@@ -20,6 +20,12 @@ namespace SM
 		bool isSolid = false;
 	};
 
+	struct TilemapRenderOptions
+	{
+		int tileWidthPx = 64;
+		int tileHeightPx = 64;
+	};
+
 	class Tilemap
 	{
 	public:
@@ -28,6 +34,17 @@ namespace SM
 		void Render();
 		void Unload();
 
+		void Generate();
+
+		Tile* GetTile(int col, int row);
+		int   GetIndex(int col, int row);
+
+	private:
+		TilemapRenderOptions m_renderOpts;
+
+		Tile* m_tiles = nullptr;
+		int m_cols = 8;
+		int m_rows = 8;
 	};
 }
 
