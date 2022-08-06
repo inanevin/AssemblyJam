@@ -58,6 +58,11 @@ namespace SM
 
     int GetRandom(int low, int high)
     {
+        if (high <= 0) {
+            LOG("OMG GETRANDOM() ERROOORR low %d, high %d", low, high);
+            // todo assert
+            return low;
+        }
         return low + (rand() % (high + 1));
     }
 

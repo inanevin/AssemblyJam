@@ -122,6 +122,14 @@ namespace SM
 
 		BSPTree* tree = new BSPTree(m_tilemap.GetWidth(), m_tilemap.GetHeight());
 
+		/*
+
+			LOL
+
+			todo(nicolas): copypaste the working implementation from the old project loollzzz
+
+		*/
+
 		// PLACE ROOMS
 		struct
 		{
@@ -145,11 +153,11 @@ namespace SM
 					{
 						Room* room = new Room;
 
-						int padding = 2;
+						int padding = 1;
 						room->startCol = node->m_startCol + padding;
 						room->startRow = node->m_startRow + padding;
-						room->width    = GetRandom(4, node->m_width  - padding);
-						room->height   = GetRandom(4, node->m_height - padding);
+						room->width    = GetRandom(3, node->m_width - padding) - 1;
+						room->height   = GetRandom(3, node->m_height - padding) - 1;
 
 						//LOG("ROOM at (%d,%d) size (%d,%d)", room->startCol, room->startRow, room->width, room->height);
 
