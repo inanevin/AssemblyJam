@@ -1,5 +1,6 @@
 #include "World/Tilemap.hpp"
 #include "Common/Utils.hpp"
+#include "Common/BSPTree.hpp"
 #include "linavg/LinaVG.hpp"
 
 namespace SM
@@ -53,6 +54,13 @@ namespace SM
 	void Tilemap::Generate()
 	{
 		SetTiles(0,0, m_cols-1,m_rows-1, TILE_WALL);
+
+		BSPTree* tree = new BSPTree;
+
+
+
+		delete tree;
+		tree = nullptr;
 	}
 
 	void Tilemap::Randomize()

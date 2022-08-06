@@ -26,6 +26,8 @@ src/Graphics/GameRenderer.cpp
 
 # Common
 src/Common/DataStructures.hpp
+src/Common/BSPTree.hpp
+src/Common/BSPTree.cpp
 src/Common/Utils.hpp
 src/Common/Utils.cpp
 src/Common/Common.hpp
