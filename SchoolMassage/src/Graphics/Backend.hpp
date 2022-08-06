@@ -75,6 +75,7 @@ namespace SM::Backend
     bool Initialize();
     void Terminate();
     void StartFrame();
+    void Render();
 
     void          EndFrame();
     void          BufferFontTextureAtlas(int width, int height, int offsetX, int offsetY, unsigned char* data);

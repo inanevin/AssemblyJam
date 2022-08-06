@@ -24,6 +24,10 @@ int main(int argc, char** argv)
 	while (true)
 	{
 		w.Update();
+
+		Backend::StartFrame();
+		Backend::Render();
+		Backend::EndFrame();
 	}
 
 	Backend::Terminate();

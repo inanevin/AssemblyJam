@@ -26,15 +26,15 @@ namespace SM
             return m_glfwWindow;
         }
 
-        void SetSize(const Vector2i& newSize);
-        void SetPos(const Vector2i& newPos);
-        void SetPosCentered(const Vector2i& newPos);
+        void SetSize(const Vec2i& newSize);
+        void SetPos(const Vec2i& newPos);
+        void SetPosCentered(const Vec2i& newPos);
 
-        inline const Vector2i& GetSize()
+        inline const Vec2i& GetSize()
         {
             return m_size;
         }
-        inline const Vector2i& GetPos()
+        inline const Vec2i& GetPos()
         {
             return m_pos;
         }
@@ -45,8 +45,8 @@ namespace SM
         }
 
     private:
-        Vector2i       m_size = Vector2i(0, 0);
-        Vector2i       m_pos  = Vector2i(0, 0);
+        Vec2i       m_size = Vec2i(0, 0);
+        Vec2i       m_pos  = Vec2i(0, 0);
         static Window* s_instance;
         GLFWwindow*    m_glfwWindow = nullptr;
         void*          m_userPtr    = nullptr;

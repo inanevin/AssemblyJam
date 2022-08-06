@@ -209,6 +209,9 @@ namespace SM::Backend
 
     void StartFrame()
     {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glClearColor((GLfloat)0.8f, (GLfloat)0.8f, (GLfloat)0.8f, (GLfloat)1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         glDepthMask(GL_FALSE);
         glEnable(GL_BLEND);
@@ -274,6 +277,44 @@ namespace SM::Backend
         g_backendData.m_proj[3][3] = 1.0f;
 
         glBindVertexArray(g_backendData.m_vao);
+    }
+
+    void Render()
+    {
+       
+        ShaderData& data = g_backendData.m_defaultShaderData;
+        glUseProgram(data.m_handle);
+        glUniformMatrix4fv(data.m_uniformMap["proj"], 1, GL_FALSE, &g_backendData.m_proj[0][0]);
+
+        vector<Vertex> v;
+        vector<Index>  i;
+
+        Vertex v1;
+        Vertex v2;
+        Vertex v3;
+        v1.pos = Vec2(100, 100);
+        v2.pos = Vec2(200, 100);
+        v3.pos = Vec2(200, 500);
+        v1.col = Vec4(1, 0, 0, 1);
+        v2.col = Vec4(1,1,1,1);
+        v3.col = Vec4(1,1,1,1);
+
+        v.push_back(v1);
+        v.push_back(v2);
+        v.push_back(v3);
+
+        i.push_back(0);
+        i.push_back(2);
+        i.push_back(1);
+
+        glBindBuffer(GL_ARRAY_BUFFER, g_backendData.m_vbo);
+        glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(Vertex), (const GLvoid*)v.data(), GL_STREAM_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, g_backendData.m_ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, i.size() * sizeof(Index), (const GLvoid*)i.data(), GL_STREAM_DRAW);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glDrawElements(GL_TRIANGLES, (GLsizei)i.size(), sizeof(Index) == 2 ? GL_UNSIGNED_SHORT : GL_UNSIGNED_INT, 0);
     }
 
     void EndFrame()
@@ -395,4 +436,4 @@ namespace SM::Backend
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
 
-} // namespace SM
+} // namespace SM::Backend
