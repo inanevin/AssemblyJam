@@ -54,6 +54,8 @@ src/World/Player.hpp
 src/World/Player.cpp
 src/World/Camera.hpp
 src/World/Camera.cpp
+src/World/Tilemap.hpp
+src/World/Tilemap.cpp
 
 )
 
